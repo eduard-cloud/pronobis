@@ -11,6 +11,10 @@ type SeedInput = {
   interests: string[];
   relation: Person['relation'];
   householdId: string;
+  /** Real profile photo URL. Omitted on purpose for children (initials-only,
+   * for privacy) and for a handful of recent adult joiners who haven't
+   * uploaded one yet — falls back to generateInitialsAvatar below. */
+  photo?: string;
 };
 
 function area(label: string): { lat: number; lng: number; label: string } {
@@ -54,6 +58,7 @@ const households: {
         interests: ['Hiking', 'Cooking', 'Board games'],
         relation: 'adult',
         householdId: 'h1',
+        photo: 'https://randomuser.me/api/portraits/men/32.jpg',
       },
       {
         id: 'p2',
@@ -64,6 +69,7 @@ const households: {
         interests: ['Reading', 'Photography', 'Coffee'],
         relation: 'adult',
         householdId: 'h1',
+        photo: 'https://randomuser.me/api/portraits/women/44.jpg',
       },
       {
         id: 'p3',
@@ -120,6 +126,7 @@ const households: {
         interests: ['Gardening', 'Football'],
         relation: 'adult',
         householdId: 'h3',
+        photo: 'https://randomuser.me/api/portraits/men/45.jpg',
       },
       {
         id: 'p7',
@@ -130,6 +137,7 @@ const households: {
         interests: ['Baking', 'Yoga'],
         relation: 'adult',
         householdId: 'h3',
+        photo: 'https://randomuser.me/api/portraits/women/68.jpg',
       },
       {
         id: 'p8',
@@ -176,6 +184,7 @@ const households: {
         interests: ['Volunteering', 'Chess'],
         relation: 'adult',
         householdId: 'h5',
+        photo: 'https://randomuser.me/api/portraits/men/12.jpg',
       },
       {
         id: 'p11',
@@ -186,6 +195,7 @@ const households: {
         interests: ['Volunteering', 'Baking'],
         relation: 'adult',
         householdId: 'h5',
+        photo: 'https://randomuser.me/api/portraits/women/21.jpg',
       },
       {
         id: 'p12',
@@ -234,6 +244,7 @@ const households: {
         interests: ['Hiking', 'Skiing', 'Cycling'],
         relation: 'adult',
         householdId: 'h6',
+        photo: 'https://randomuser.me/api/portraits/men/67.jpg',
       },
     ],
   },
@@ -252,6 +263,7 @@ const households: {
         interests: ['Music', 'Coffee'],
         relation: 'adult',
         householdId: 'h7',
+        photo: 'https://randomuser.me/api/portraits/men/8.jpg',
       },
       {
         id: 'p17',
@@ -262,6 +274,7 @@ const households: {
         interests: ['Yoga', 'Cooking'],
         relation: 'adult',
         householdId: 'h7',
+        photo: 'https://randomuser.me/api/portraits/women/5.jpg',
       },
       {
         id: 'p18',
@@ -308,6 +321,7 @@ const households: {
         interests: ['Football', 'Cycling'],
         relation: 'adult',
         householdId: 'h9',
+        photo: 'https://randomuser.me/api/portraits/men/51.jpg',
       },
       {
         id: 'p21',
@@ -318,6 +332,7 @@ const households: {
         interests: ['Volunteering', 'Photography'],
         relation: 'adult',
         householdId: 'h9',
+        photo: 'https://randomuser.me/api/portraits/women/76.jpg',
       },
       {
         id: 'p22',
@@ -342,7 +357,7 @@ function buildPeople(): Person[] {
         id: m.id,
         firstName: m.firstName,
         lastName: m.lastName,
-        photo: generateInitialsAvatar(m.firstName, m.lastName, m.id),
+        photo: m.photo ?? generateInitialsAvatar(m.firstName, m.lastName, m.id),
         birthDate: m.birthDate,
         memberSince: h.memberSince,
         bio: m.bio,
