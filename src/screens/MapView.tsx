@@ -140,9 +140,15 @@ export function MapView({ query, onSelectPerson }: Props) {
       const bounds = boundsFromHouseholds();
       if (bounds) map.fitBounds(bounds, { padding: 56, duration: 0 });
 
-      map.on('render', () => {
+      // Reconcile markers once a pan/zoom gesture settles, rather than on
+      // every 'render' frame: querying a clustered source mid-gesture races
+      // tile loading and can transiently return no features, which was
+      // deleting markers while dragging and sometimes leaving them gone
+      // for good. mapboxgl.Marker already repositions existing markers
+      // every frame on its own, so live dragging stays smooth regardless.
+      const reconcileMarkers = () => {
         // React StrictMode double-mounts in dev, tearing the first map
-        // down before its style finishes loading — a stray 'render' from
+        // down before its style finishes loading — a stray event from
         // that torn-down instance can race this check, so guard instead
         // of trusting isSourceLoaded not to throw on a removed map.
         try {
@@ -151,6 +157,11 @@ export function MapView({ query, onSelectPerson }: Props) {
           return;
         }
         updateMarkers();
+      };
+      map.on('moveend', reconcileMarkers);
+      map.on('zoomend', reconcileMarkers);
+      map.on('sourcedata', (e) => {
+        if (e.sourceId === SOURCE_ID && e.isSourceLoaded) reconcileMarkers();
       });
 
       map.on('zoom', () => {
