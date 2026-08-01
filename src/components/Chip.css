@@ -1,0 +1,45 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.chip--cyan {
+  background: var(--cyan);
+  color: var(--ink);
+}
+
+.chip--orange {
+  background: var(--orange);
+  color: var(--ink);
+}
+
+.chip--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.chip--outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid rgba(12, 15, 20, 0.18);
+}
+
+.chip--tappable {
+  cursor: pointer;
+}
+
+.chip--outline.chip--selected {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}

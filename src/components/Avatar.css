@@ -1,0 +1,20 @@
+.avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 auto;
+  padding: 0;
+  border: none;
+  background: var(--paper);
+  box-shadow: 0 2px 8px rgba(12, 15, 20, 0.15);
+}
+
+.avatar--ring {
+  border: 2px solid #fff;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
