@@ -36,7 +36,7 @@ export function ListView({ query, onSelectPerson }: Props) {
       <div className="list-view__groups">
         {groups.map(({ household, members }) => (
           <div key={household.id} className="list-view__group">
-            <p className="t-caption list-view__group-label">{household.label}</p>
+            <p className="t-section-header list-view__group-label">{household.label}</p>
             {members.map((person) => {
               const others = household.memberIds
                 .filter((id) => id !== person.id)

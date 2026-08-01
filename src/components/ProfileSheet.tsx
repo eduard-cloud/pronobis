@@ -87,10 +87,10 @@ export function ProfileSheet({ personId, onClose, onSelectPerson, onEdit }: Prop
             />
           </div>
 
-          <h2 className="t-display profile-sheet__name">
+          <h2 className="t-large-title profile-sheet__name">
             {person.firstName}
             <br />
-            <em>{person.lastName}</em>
+            {person.lastName}
           </h2>
 
           <div className="profile-sheet__chips">

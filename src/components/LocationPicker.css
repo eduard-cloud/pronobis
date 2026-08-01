@@ -43,3 +43,19 @@
   border: 2px solid #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
+
+.location-picker__presets {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 4px;
+  scrollbar-width: none;
+}
+
+.location-picker__presets::-webkit-scrollbar {
+  display: none;
+}
+
+.location-picker__presets .chip {
+  flex: 0 0 auto;
+}

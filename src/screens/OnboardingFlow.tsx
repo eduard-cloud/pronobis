@@ -5,6 +5,7 @@ import { INTEREST_PRESETS } from '../data/interests';
 import { LocationPicker } from '../components/LocationPicker';
 import { Chip } from '../components/Chip';
 import { processPhotoFile } from '../utils/photo';
+import { TIMISOARA_CENTER } from '../data/timisoaraAreas';
 import type { Household, Person, Relation } from '../types';
 import './OnboardingFlow.css';
 
@@ -15,7 +16,7 @@ type Props = {
 const STEPS = ['photo', 'identity', 'since', 'location', 'about', 'family'] as const;
 type Step = (typeof STEPS)[number];
 
-const DEFAULT_LOCATION = { lat: 45.9432, lng: 24.9668, label: '' };
+const DEFAULT_LOCATION = { ...TIMISOARA_CENTER, label: '' };
 
 type FamilyDraft = {
   id: string;
@@ -144,8 +145,8 @@ export function OnboardingFlow({ onComplete }: Props) {
         {step === 'since' && <SinceStep memberSince={memberSince} onChange={setMemberSince} />}
         {step === 'location' && (
           <div className="onboarding__step">
-            <h2 className="t-display onboarding__title">
-              Where's <em>home</em>?
+            <h2 className="t-large-title onboarding__title">
+              Where's <span className="onboarding__title-accent">home</span>?
             </h2>
             <LocationPicker
               value={location}
@@ -194,8 +195,8 @@ function PhotoStep({ photo, onPhoto }: { photo: string; onPhoto: (v: string) => 
 
   return (
     <div className="onboarding__step onboarding__step--center">
-      <h2 className="t-display onboarding__title">
-        Add a <em>photo</em>
+      <h2 className="t-large-title onboarding__title">
+        Add a <span className="onboarding__title-accent">photo</span>
       </h2>
       <p className="t-body onboarding__hint">So people can put a face to your name.</p>
       <label className="onboarding__photo-picker">
@@ -227,8 +228,8 @@ function IdentityStep({
 }) {
   return (
     <div className="onboarding__step">
-      <h2 className="t-display onboarding__title">
-        What's your <em>name</em>?
+      <h2 className="t-large-title onboarding__title">
+        What's your <span className="onboarding__title-accent">name</span>?
       </h2>
       <input
         className="onboarding__input t-body"
@@ -262,8 +263,8 @@ function SinceStep({
 }) {
   return (
     <div className="onboarding__step">
-      <h2 className="t-display onboarding__title">
-        In ProNobis <em>since</em>
+      <h2 className="t-large-title onboarding__title">
+        In ProNobis <span className="onboarding__title-accent">since</span>
       </h2>
       <input
         className="onboarding__input t-body"
@@ -299,8 +300,8 @@ function AboutStep({
 
   return (
     <div className="onboarding__step">
-      <h2 className="t-display onboarding__title">
-        A little <em>about you</em>
+      <h2 className="t-large-title onboarding__title">
+        A little <span className="onboarding__title-accent">about you</span>
       </h2>
       <textarea
         className="onboarding__textarea t-body"
@@ -375,8 +376,8 @@ function FamilyStep({
 
   return (
     <div className="onboarding__step">
-      <h2 className="t-display onboarding__title">
-        Add <em>family?</em>
+      <h2 className="t-large-title onboarding__title">
+        Add <span className="onboarding__title-accent">family?</span>
       </h2>
       <p className="t-body onboarding__hint">
         Spouse, kids — you can always add more later.

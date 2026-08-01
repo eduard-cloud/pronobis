@@ -1,8 +1,8 @@
 .onboarding {
   height: 100dvh;
   width: 100%;
-  background: var(--ink);
-  color: var(--paper);
+  background: #fff;
+  color: var(--ink);
   display: flex;
   flex-direction: column;
   padding: calc(20px + env(safe-area-inset-top)) 24px calc(20px + env(safe-area-inset-bottom));
@@ -19,7 +19,7 @@
   flex: 1 1 0;
   height: 3px;
   border-radius: var(--r-pill);
-  background: rgba(244, 243, 240, 0.18);
+  background: var(--label-quaternary);
 }
 
 .onboarding__tick--active {
@@ -45,18 +45,21 @@
 }
 
 .onboarding__title {
-  color: var(--paper);
-  font-size: 36px;
+  color: var(--ink);
   margin-bottom: 4px;
 }
 
+.onboarding__title-accent {
+  color: var(--orange);
+}
+
 .onboarding__hint {
-  color: var(--muted);
+  color: var(--label-secondary);
   margin-bottom: 8px;
 }
 
 .onboarding__label {
-  color: var(--muted);
+  color: var(--label-secondary);
   margin-top: 4px;
 }
 
@@ -64,15 +67,15 @@
   width: 100%;
   padding: 16px 18px;
   border-radius: var(--r-pill);
-  border: 1px solid rgba(244, 243, 240, 0.2);
-  background: rgba(244, 243, 240, 0.06);
-  color: var(--paper);
-  font-size: 16px;
+  border: 1px solid var(--separator);
+  background: rgba(60, 60, 67, 0.04);
+  color: var(--ink);
+  font-size: 17px;
   outline: none;
 }
 
 .onboarding__input::placeholder {
-  color: var(--muted);
+  color: var(--label-tertiary);
 }
 
 .onboarding__textarea {
@@ -80,23 +83,23 @@
   min-height: 100px;
   padding: 16px 18px;
   border-radius: 20px;
-  border: 1px solid rgba(244, 243, 240, 0.2);
-  background: rgba(244, 243, 240, 0.06);
-  color: var(--paper);
-  font-size: 16px;
+  border: 1px solid var(--separator);
+  background: rgba(60, 60, 67, 0.04);
+  color: var(--ink);
+  font-size: 17px;
   outline: none;
   resize: none;
 }
 
 .onboarding__textarea::placeholder {
-  color: var(--muted);
+  color: var(--label-tertiary);
 }
 
 .onboarding__photo-picker {
   width: 148px;
   height: 148px;
   border-radius: 50%;
-  border: 2px dashed rgba(244, 243, 240, 0.3);
+  border: 2px dashed var(--separator);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +116,7 @@
 
 .onboarding__photo-placeholder {
   font-size: 40px;
-  color: var(--muted);
+  color: var(--label-tertiary);
   line-height: 1;
 }
 
@@ -130,8 +133,8 @@
 }
 
 .onboarding__chip-grid .chip--outline {
-  border-color: rgba(244, 243, 240, 0.28);
-  color: var(--paper);
+  border-color: var(--separator);
+  color: var(--ink);
 }
 
 .onboarding__chip-grid .chip--outline.chip--selected {
@@ -152,9 +155,9 @@
 .onboarding__add-btn {
   padding: 0 20px;
   border-radius: var(--r-pill);
-  border: 1px solid rgba(244, 243, 240, 0.2);
+  border: 1px solid var(--separator);
   background: transparent;
-  color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-display);
   font-weight: 600;
 }
@@ -174,7 +177,7 @@
   justify-content: space-between;
   padding: 12px 16px;
   border-radius: var(--r-pill);
-  background: rgba(244, 243, 240, 0.06);
+  background: rgba(60, 60, 67, 0.04);
 }
 
 .onboarding__remove {
@@ -192,7 +195,7 @@
   gap: 12px;
   padding: 16px;
   border-radius: 20px;
-  background: rgba(244, 243, 240, 0.04);
+  background: rgba(60, 60, 67, 0.03);
 }
 
 .onboarding__relation-toggle {
@@ -201,8 +204,8 @@
 }
 
 .onboarding__relation-toggle .chip--outline {
-  border-color: rgba(244, 243, 240, 0.28);
-  color: var(--paper);
+  border-color: var(--separator);
+  color: var(--ink);
 }
 
 .onboarding__relation-toggle .chip--selected {
@@ -220,7 +223,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 17px;
   margin-top: 16px;
 }
 
@@ -234,12 +237,12 @@
 .onboarding__back-btn {
   padding: 16px 24px;
   border-radius: var(--r-pill);
-  border: 1px solid rgba(244, 243, 240, 0.2);
+  border: 1px solid var(--separator);
   background: transparent;
-  color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .onboarding__next {
@@ -251,9 +254,9 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .onboarding__next:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
 }

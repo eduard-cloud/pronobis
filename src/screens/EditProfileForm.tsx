@@ -6,6 +6,7 @@ import { LocationPicker } from '../components/LocationPicker';
 import { Chip } from '../components/Chip';
 import { Avatar } from '../components/Avatar';
 import { processPhotoFile } from '../utils/photo';
+import { TIMISOARA_CENTER } from '../data/timisoaraAreas';
 import type { Person, Relation } from '../types';
 import './EditProfileForm.css';
 
@@ -37,7 +38,7 @@ export function EditProfileForm({ personId, onClose }: Props) {
   const [birthDate, setBirthDate] = useState(person?.birthDate ?? '');
   const [memberSince, setMemberSince] = useState(person?.memberSince ?? '');
   const [location, setLocation] = useState(
-    person?.location ?? { lat: 45.9432, lng: 24.9668, label: '' }
+    person?.location ?? { ...TIMISOARA_CENTER, label: '' }
   );
   const [bio, setBio] = useState(person?.bio ?? '');
   const [interests, setInterests] = useState<string[]>(person?.interests ?? []);
