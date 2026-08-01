@@ -1,0 +1,31 @@
+const PALETTE = [
+  { bg: '#A9DCE6', fg: '#0C0F14' },
+  { bg: '#F58A33', fg: '#0C0F14' },
+  { bg: '#0C0F14', fg: '#F4F3F0' },
+  { bg: '#8A9099', fg: '#0C0F14' },
+];
+
+function hashString(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+export function generateInitialsAvatar(
+  firstName: string,
+  lastName: string,
+  seed: string
+): string {
+  const initials = `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase();
+  const { bg, fg } = PALETTE[hashString(seed) % PALETTE.length];
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<rect width="128" height="128" fill="${bg}"/>
+<text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle" font-family="Inter Tight, system-ui, sans-serif" font-weight="700" font-size="52" letter-spacing="-2" fill="${fg}">${initials}</text>
+</svg>`;
+
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
