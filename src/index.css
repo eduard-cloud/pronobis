@@ -41,3 +41,23 @@ img {
   overflow-x: hidden;
   position: relative;
 }
+
+/* This is a mobile-only UI; on wider viewports, frame it like a phone
+   screen instead of letting text and pills stretch edge to edge. */
+@media (min-width: 640px) {
+  body {
+    display: flex;
+    justify-content: center;
+    background: var(--ink);
+  }
+
+  #root {
+    max-width: 430px;
+    height: 100dvh;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.35);
+    /* Establishes a containing block so the app's position:fixed sheets/bars
+       (nav bar, segmented control, profile sheet, edit form) clip to the
+       phone frame instead of the full browser viewport. */
+    transform: translateZ(0);
+  }
+}

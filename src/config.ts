@@ -1,4 +1,4 @@
-export const INVITE_CODE = 'pronobis2026';
+export const INVITE_CODE = 'pronobis';
 export const GATE_STORAGE_KEY = 'pronobis.gate';
 
 // TODO: swap back to username 'eduardbadea96' + style 'cmsa43f2100b101sdcputdr6h'
