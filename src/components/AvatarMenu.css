@@ -1,0 +1,33 @@
+.avatar-menu {
+  position: relative;
+}
+
+.avatar-menu__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  min-width: 200px;
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(12, 15, 20, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-menu__item {
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: none;
+  background: transparent;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.avatar-menu__item--danger {
+  color: var(--orange);
+}
