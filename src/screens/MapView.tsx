@@ -5,7 +5,7 @@ import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
 import L from 'leaflet';
 import { usePeople } from '../data/store';
-import { FamilyBunchMarker } from '../map/FamilyBunchMarker';
+import { PersonMarker } from '../map/PersonMarker';
 import { createClusterIcon } from '../map/clusterIcon';
 import { TIMISOARA_CENTER } from '../data/timisoaraAreas';
 import type { Person } from '../types';
@@ -43,14 +43,18 @@ export function MapView({ query, onSelectPerson }: Props) {
     [people, households]
   );
 
-  const visibleGroups = useMemo(() => {
+  // Children stay off the map for privacy — they're still visible inside a
+  // parent's sheet under Connected people, and always in List view.
+  const visibleAdults = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return householdGroups;
-    return householdGroups.filter(
-      ({ household, members }) =>
-        household.label.toLowerCase().includes(q) ||
-        members.some((p) => `${p.firstName} ${p.lastName}`.toLowerCase().includes(q))
-    );
+    const matching = q
+      ? householdGroups.filter(
+          ({ household, members }) =>
+            household.label.toLowerCase().includes(q) ||
+            members.some((p) => `${p.firstName} ${p.lastName}`.toLowerCase().includes(q))
+        )
+      : householdGroups;
+    return matching.flatMap((g) => g.members.filter((p) => p.relation === 'adult'));
   }, [householdGroups, query]);
 
   const bounds = useMemo(() => {
@@ -83,13 +87,8 @@ export function MapView({ query, onSelectPerson }: Props) {
           showCoverageOnHover={false}
           spiderfyOnMaxZoom
         >
-          {visibleGroups.map(({ household, members }) => (
-            <FamilyBunchMarker
-              key={household.id}
-              household={household}
-              members={members}
-              onSelectPerson={onSelectPerson}
-            />
+          {visibleAdults.map((person) => (
+            <PersonMarker key={person.id} person={person} onSelectPerson={onSelectPerson} />
           ))}
         </MarkerClusterGroup>
       </MapContainer>

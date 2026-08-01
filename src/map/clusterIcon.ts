@@ -16,8 +16,8 @@ function escapeHtml(str: string): string {
 
 /** Renders a cluster the way Snapchat's map does: a peek of up to two real
  * avatar photos, overlapped, plus a "+N" badge for everyone else in the
- * cluster. Pulls real people (not just a count) from `clusterMembers`,
- * attached to each underlying household marker in FamilyBunchMarker. */
+ * cluster. Pulls real people from `clusterMembers`, attached to each
+ * underlying marker in PersonMarker. */
 export function createClusterIcon(cluster: L.MarkerCluster): L.DivIcon {
   const markers = cluster.getAllChildMarkers();
   const people = markers.flatMap(
