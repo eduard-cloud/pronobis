@@ -1,7 +1,7 @@
 import type { Person } from '../types';
 import './personMarker.css';
 
-const AVATAR_SIZE = 44;
+const AVATAR_SIZE = 56;
 
 /** Builds the plain DOM element used as a mapbox-gl Marker for one person. */
 export function createPersonMarkerElement(person: Person, onSelect: (id: string) => void): HTMLElement {

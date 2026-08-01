@@ -17,6 +17,24 @@ mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 const SOURCE_ID = 'people';
 const PEEK_COUNT = 2;
 
+// Person avatars and cluster peeks grow/shrink with zoom instead of
+// staying a fixed pixel size, so the map reads as more alive when
+// scrolling/pinching to zoom.
+const SCALE_BASE_ZOOM = 12;
+const SCALE_MIN = 0.65;
+const SCALE_MAX = 1.9;
+const SCALE_SENSITIVITY = 0.14;
+
+function scaleForZoom(zoom: number): number {
+  const raw = 1 + (zoom - SCALE_BASE_ZOOM) * SCALE_SENSITIVITY;
+  return Math.min(SCALE_MAX, Math.max(SCALE_MIN, raw));
+}
+
+function applyMarkerScale(el: HTMLElement, scale: number) {
+  const target = el.querySelector<HTMLElement>('.person-marker__avatar, .map-cluster');
+  target?.style.setProperty('--zoom-scale', String(scale));
+}
+
 type Props = {
   query: string;
   onSelectPerson: (id: string) => void;
@@ -134,6 +152,13 @@ export function MapView({ query, onSelectPerson }: Props) {
         }
         updateMarkers();
       });
+
+      map.on('zoom', () => {
+        const scale = scaleForZoom(map.getZoom());
+        for (const marker of markersRef.current.values()) {
+          applyMarkerScale(marker.getElement(), scale);
+        }
+      });
     });
 
     function boundsFromHouseholds(): mapboxgl.LngLatBoundsLike | null {
@@ -184,6 +209,7 @@ export function MapView({ query, onSelectPerson }: Props) {
               });
             });
             const marker = new mapboxgl.Marker({ element: el }).setLngLat(coords).addTo(map);
+            applyMarkerScale(el, scaleForZoom(map.getZoom()));
             markersRef.current.set(id, marker);
           });
         } else {
@@ -201,6 +227,7 @@ export function MapView({ query, onSelectPerson }: Props) {
             (personId) => onSelectPersonRef.current(personId)
           );
           const marker = new mapboxgl.Marker({ element: el }).setLngLat(coords).addTo(map);
+          applyMarkerScale(el, scaleForZoom(map.getZoom()));
           markersRef.current.set(id, marker);
         }
       }
