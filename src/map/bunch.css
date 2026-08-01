@@ -1,0 +1,17 @@
+.family-bunch-icon {
+  background: transparent;
+  border: none;
+}
+
+.family-bunch {
+  position: relative;
+}
+
+.family-bunch__avatar {
+  position: absolute;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(12, 15, 20, 0.35);
+  cursor: pointer;
+}

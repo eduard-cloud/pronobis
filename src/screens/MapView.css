@@ -1,0 +1,15 @@
+.map-view {
+  height: 100%;
+  width: 100%;
+}
+
+.map-view__map {
+  height: 100%;
+  width: 100%;
+  background: var(--paper);
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
+  opacity: 0.7;
+}
