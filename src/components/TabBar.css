@@ -87,7 +87,7 @@
 }
 
 .tab-bar__tab--active .tab-bar__tab-pill {
-  background: #ededed;
+  background: #efefef;
 }
 
 .tab-bar__tab[data-tint='teal'] .tab-bar__tab-pill {
