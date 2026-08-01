@@ -1,0 +1,41 @@
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.t-display em,
+.t-display i {
+  font-style: italic;
+  font-weight: 700;
+}
+
+.t-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.t-body {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.t-caption {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
