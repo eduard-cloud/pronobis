@@ -1,32 +1,51 @@
-# React + TypeScript + Vite
+# ProNobis People — Phase 0 prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A lightweight people directory for ProNobis: put a face to a name, see who has
+family in the community, and discover who lives near who.
 
-Currently, two official plugins are available:
+This is a **clickable, testable prototype** to proof the concept with real
+users — not production software.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Important: the invite code is a door, not a lock
 
-## React Compiler
+The gate screen checks the invite code entirely client-side, against a
+constant in [`src/config.ts`](src/config.ts). Anyone who opens the app in dev
+tools can read the code, and anyone with the code can edit anyone else's
+profile. This is intentional for a Phase 0 proof session — it keeps casual
+passersby out, nothing more. Do not treat it as authentication.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Data
 
-## Expanding the Oxlint configuration
+Everything lives in the browser: seeded mock people (`src/data/seed.ts`) plus
+whatever testers add through onboarding, persisted to `localStorage` under
+the key `pronobis.v1`. There is no backend and no server-side validation.
+"Reset demo data" (in the avatar menu) wipes local changes and restores the
+seed set — use it between testers.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Running it
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev -- --host
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open the printed LAN URL on an actual phone to test the segmented control,
+sheet drag, and map bunch tap targets with a thumb — that's the point of this
+build.
+
+## Map tiles
+
+The map uses Mapbox raster tiles (`src/config.ts`, `MAPBOX_TILE_URL`),
+currently pointed at the stock `light-v11` style. The original custom style
+(`eduardbadea96/cmsa43f2100b101sdcputdr6h`) returns blank tiles because it's
+built on the new "Mapbox Standard" 3D basemap, which the raster Tiles API
+(what Leaflet needs) doesn't render server-side. To use the custom style,
+duplicate it in Mapbox Studio with a classic basemap import (not Standard),
+publish it, and swap `MAPBOX_STYLE_ID` back.
+
+## Out of scope
+
+No backend, no real accounts, no photo moderation, no search-by-interest, no
+admin. Anyone with the invite code can edit anyone's profile. This build
+exists to answer "do people understand and want this?" — not to ship to the
+whole company.
