@@ -98,6 +98,7 @@
 .onboarding__photo-picker {
   width: 148px;
   height: 148px;
+  flex-shrink: 0;
   border-radius: 50%;
   border: 2px dashed var(--separator);
   display: flex;
