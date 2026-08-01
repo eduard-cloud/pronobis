@@ -19,13 +19,17 @@ function escapeHtml(str: string): string {
 }
 
 export function FamilyBunchMarker({ household, members, onSelectPerson }: Props) {
-  const location = members[0]?.location;
+  // Children stay off the map for privacy — they're still visible inside the
+  // sheet once a parent's pin is tapped, and always in List view.
+  const adults = members.filter((m) => m.relation === 'adult');
+
+  const location = adults[0]?.location;
   if (!location) return null;
 
-  const layout = layoutBunch(members);
+  const layout = layoutBunch(adults);
   if (layout.avatars.length === 0) return null;
 
-  const membersById = new Map(members.map((m) => [m.id, m]));
+  const membersById = new Map(adults.map((m) => [m.id, m]));
 
   const avatarsHtml = layout.avatars
     .map((a) => {
@@ -59,7 +63,7 @@ export function FamilyBunchMarker({ household, members, onSelectPerson }: Props)
         click: (e) => {
           const target = e.originalEvent.target as HTMLElement;
           const personId = target.closest('[data-person-id]')?.getAttribute('data-person-id');
-          onSelectPerson(personId ?? members[0].id);
+          onSelectPerson(personId ?? adults[0].id);
         },
       }}
     />
