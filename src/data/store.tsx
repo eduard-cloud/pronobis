@@ -7,15 +7,25 @@ import {
   type ReactNode,
 } from 'react';
 import type { Household, Person } from '../types';
-import { CURRENT_USER_ID, seedHouseholds, seedPeople } from './seed';
+import { seedHouseholds, seedPeople } from './seed';
 
 const STORAGE_KEY = 'pronobis.v1';
 
 type StoredState = {
   people: Person[];
   households: Household[];
-  currentUserId: string;
+  currentUserId: string | null;
+  onboarded: boolean;
 };
+
+function seedState(): StoredState {
+  return {
+    people: seedPeople,
+    households: seedHouseholds,
+    currentUserId: null,
+    onboarded: false,
+  };
+}
 
 function loadState(): StoredState {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -26,11 +36,7 @@ function loadState(): StoredState {
       // fall through to seed
     }
   }
-  return {
-    people: seedPeople,
-    households: seedHouseholds,
-    currentUserId: CURRENT_USER_ID,
-  };
+  return seedState();
 }
 
 function saveState(state: StoredState) {
@@ -40,9 +46,11 @@ function saveState(state: StoredState) {
 type PeopleContextValue = {
   people: Person[];
   households: Household[];
-  currentUserId: string;
+  currentUserId: string | null;
+  onboarded: boolean;
   upsertPerson: (person: Person) => void;
   addHouseholdMember: (householdId: string, person: Person) => void;
+  completeOnboarding: (household: Household, newPeople: Person[]) => void;
   resetDemo: () => void;
 };
 
@@ -80,12 +88,24 @@ export function PeopleProvider({ children }: { children: ReactNode }) {
     []
   );
 
+  const completeOnboarding = useCallback(
+    (household: Household, newPeople: Person[]) => {
+      setState((prev) => {
+        const next: StoredState = {
+          people: [...prev.people, ...newPeople],
+          households: [...prev.households, household],
+          currentUserId: newPeople[0]?.id ?? prev.currentUserId,
+          onboarded: true,
+        };
+        saveState(next);
+        return next;
+      });
+    },
+    []
+  );
+
   const resetDemo = useCallback(() => {
-    const fresh: StoredState = {
-      people: seedPeople,
-      households: seedHouseholds,
-      currentUserId: CURRENT_USER_ID,
-    };
+    const fresh = seedState();
     setState(fresh);
     saveState(fresh);
   }, []);
@@ -95,11 +115,13 @@ export function PeopleProvider({ children }: { children: ReactNode }) {
       people: state.people,
       households: state.households,
       currentUserId: state.currentUserId,
+      onboarded: state.onboarded,
       upsertPerson,
       addHouseholdMember,
+      completeOnboarding,
       resetDemo,
     }),
-    [state, upsertPerson, addHouseholdMember, resetDemo]
+    [state, upsertPerson, addHouseholdMember, completeOnboarding, resetDemo]
   );
 
   return (

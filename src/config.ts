@@ -1,8 +1,11 @@
 export const INVITE_CODE = 'pronobis2026';
 export const GATE_STORAGE_KEY = 'pronobis.gate';
 
-const MAPBOX_USERNAME = 'eduardbadea96';
-const MAPBOX_STYLE_ID = 'cmsa43f2100b101sdcputdr6h';
+// TODO: swap back to username 'eduardbadea96' + style 'cmsa43f2100b101sdcputdr6h'
+// once that Studio style has layers published — it currently returns blank
+// tiles (verified via curl: 139 bytes vs ~99KB for a populated style).
+const MAPBOX_USERNAME = 'mapbox';
+const MAPBOX_STYLE_ID = 'light-v11';
 const MAPBOX_ACCESS_TOKEN =
   'REDACTED_MAPBOX_TOKEN';
 

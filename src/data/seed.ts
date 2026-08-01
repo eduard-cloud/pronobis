@@ -356,5 +356,3 @@ function buildHouseholds(): Household[] {
 
 export const seedPeople: Person[] = buildPeople();
 export const seedHouseholds: Household[] = buildHouseholds();
-
-export const CURRENT_USER_ID = 'p1';

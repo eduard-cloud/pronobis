@@ -17,8 +17,8 @@
   width: 100%;
   max-height: 88dvh;
   margin: 0 auto;
-  background: var(--ink);
-  color: var(--paper);
+  background: #fff;
+  color: var(--ink);
   border-radius: var(--r-sheet) var(--r-sheet) 0 0;
   display: flex;
   flex-direction: column;
@@ -44,7 +44,7 @@
   width: 40px;
   height: 4px;
   border-radius: var(--r-pill);
-  background: rgba(244, 243, 240, 0.3);
+  background: rgba(12, 15, 20, 0.18);
 }
 
 .profile-sheet__scroll {
@@ -64,8 +64,8 @@
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 20px;
-  border: 3px solid rgba(244, 243, 240, 0.9);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 3px solid rgba(12, 15, 20, 0.1);
+  box-shadow: 0 8px 24px rgba(12, 15, 20, 0.18);
 }
 
 .profile-sheet__photo {
@@ -75,7 +75,7 @@
 }
 
 .profile-sheet__name {
-  color: var(--paper);
+  color: var(--ink);
   margin-bottom: 16px;
 }
 
@@ -102,7 +102,7 @@
   gap: 4px;
   background: none;
   border: none;
-  color: var(--paper);
+  color: var(--ink);
   flex: 0 0 auto;
 }
 
@@ -121,7 +121,7 @@
 }
 
 .profile-sheet__bio {
-  color: rgba(244, 243, 240, 0.85);
+  color: rgba(12, 15, 20, 0.75);
   margin-bottom: 20px;
   max-width: 44ch;
 }
@@ -135,8 +135,8 @@
 }
 
 .profile-sheet__interests .chip--outline {
-  border-color: rgba(244, 243, 240, 0.28);
-  color: var(--paper);
+  border-color: rgba(12, 15, 20, 0.16);
+  color: var(--ink);
 }
 
 .profile-sheet__edit-pill {
