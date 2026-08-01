@@ -60,7 +60,11 @@ export function FamilyBunchMarker({ household, members, onSelectPerson }: Props)
       icon={icon}
       alt={household.label}
       ref={(marker) => {
-        if (marker) (marker.options as { memberCount?: number }).memberCount = adults.length;
+        if (marker) {
+          const opts = marker.options as { memberCount?: number; clusterMembers?: Person[] };
+          opts.memberCount = adults.length;
+          opts.clusterMembers = adults;
+        }
       }}
       eventHandlers={{
         click: (e) => {

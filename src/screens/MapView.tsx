@@ -79,7 +79,7 @@ export function MapView({ query, onSelectPerson }: Props) {
         {bounds && <FitBounds bounds={bounds} />}
         <MarkerClusterGroup
           iconCreateFunction={createClusterIcon}
-          maxClusterRadius={70}
+          maxClusterRadius={35}
           showCoverageOnHover={false}
           spiderfyOnMaxZoom
         >
