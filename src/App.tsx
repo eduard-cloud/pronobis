@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AppShell } from './components/AppShell';
 import { ProfileSheet } from './components/ProfileSheet';
+import { SettingsModal } from './components/SettingsModal';
 import { TopNavBar } from './components/TopNavBar';
 import { ListView } from './screens/ListView';
 import { MapView } from './screens/MapView';
@@ -18,6 +19,7 @@ function App() {
   const { onboarded, currentUserId, resetDemo } = usePeople();
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [editingPersonId, setEditingPersonId] = useState<string | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [query, setQuery] = useState('');
 
   if (!gatePassed) {
@@ -31,12 +33,7 @@ function App() {
   return (
     <>
       <AppShell
-        topBar={
-          <TopNavBar
-            onEditProfile={() => currentUserId && setEditingPersonId(currentUserId)}
-            onReset={resetDemo}
-          />
-        }
+        topBar={<TopNavBar onOpenSettings={() => setSettingsOpen(true)} />}
         query={query}
         onQueryChange={setQuery}
       >
@@ -56,6 +53,17 @@ function App() {
 
       {editingPersonId && (
         <EditProfileForm personId={editingPersonId} onClose={() => setEditingPersonId(null)} />
+      )}
+
+      {settingsOpen && (
+        <SettingsModal
+          onClose={() => setSettingsOpen(false)}
+          onEditProfile={() => {
+            setSettingsOpen(false);
+            if (currentUserId) setEditingPersonId(currentUserId);
+          }}
+          onReset={resetDemo}
+        />
       )}
     </>
   );

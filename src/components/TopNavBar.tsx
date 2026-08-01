@@ -1,14 +1,17 @@
 import { SFBellBadge } from 'sf-symbols-lib/monochrome';
-import { AvatarMenu } from './AvatarMenu';
+import { usePeople } from '../data/store';
+import { Avatar } from './Avatar';
 import pronobisMark from '../assets/pronobis-mark.svg';
 import './TopNavBar.css';
 
 type Props = {
-  onEditProfile: () => void;
-  onReset: () => void;
+  onOpenSettings: () => void;
 };
 
-export function TopNavBar({ onEditProfile, onReset }: Props) {
+export function TopNavBar({ onOpenSettings }: Props) {
+  const { people, currentUserId } = usePeople();
+  const currentUser = people.find((p) => p.id === currentUserId);
+
   return (
     <div className="top-nav">
       <div className="top-nav__row">
@@ -19,7 +22,14 @@ export function TopNavBar({ onEditProfile, onReset }: Props) {
         <div className="top-nav__spacer" />
 
         <div className="top-nav__chip top-nav__pill">
-          <AvatarMenu onEditProfile={onEditProfile} onReset={onReset} size={36} />
+          {currentUser && (
+            <Avatar
+              src={currentUser.photo}
+              alt={currentUser.firstName}
+              size={36}
+              onClick={onOpenSettings}
+            />
+          )}
           <button type="button" className="top-nav__bell" aria-label="Notifications">
             <SFBellBadge size={15} />
           </button>
