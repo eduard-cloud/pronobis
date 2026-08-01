@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AppShell } from './components/AppShell';
 import { ProfileSheet } from './components/ProfileSheet';
-import { AvatarMenu } from './components/AvatarMenu';
+import { TopNavBar } from './components/TopNavBar';
 import { ListView } from './screens/ListView';
 import { MapView } from './screens/MapView';
 import { GateScreen } from './screens/GateScreen';
@@ -17,6 +17,7 @@ function App() {
   const { onboarded, currentUserId, resetDemo } = usePeople();
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [editingPersonId, setEditingPersonId] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
 
   if (!gatePassed) {
     return <GateScreen onSuccess={() => setGatePassed(true)} />;
@@ -29,9 +30,10 @@ function App() {
   return (
     <>
       <AppShell
-        title="People"
-        avatarSlot={
-          <AvatarMenu
+        topBar={
+          <TopNavBar
+            query={query}
+            onQueryChange={setQuery}
             onEditProfile={() => currentUserId && setEditingPersonId(currentUserId)}
             onReset={resetDemo}
           />
@@ -39,9 +41,9 @@ function App() {
       >
         {(view) =>
           view === 'list' ? (
-            <ListView onSelectPerson={setSelectedPersonId} />
+            <ListView query={query} onSelectPerson={setSelectedPersonId} />
           ) : (
-            <MapView onSelectPerson={setSelectedPersonId} />
+            <MapView query={query} onSelectPerson={setSelectedPersonId} />
           )
         }
       </AppShell>

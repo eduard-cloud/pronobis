@@ -6,9 +6,10 @@ import './AvatarMenu.css';
 type Props = {
   onEditProfile: () => void;
   onReset: () => void;
+  size?: number;
 };
 
-export function AvatarMenu({ onEditProfile, onReset }: Props) {
+export function AvatarMenu({ onEditProfile, onReset, size = 40 }: Props) {
   const { people, currentUserId } = usePeople();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ export function AvatarMenu({ onEditProfile, onReset }: Props) {
       <Avatar
         src={currentUser.photo}
         alt={currentUser.firstName}
-        size={40}
+        size={size}
         onClick={() => setOpen((v) => !v)}
       />
       {open && (

@@ -1,16 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { usePeople } from '../data/store';
 import { Avatar } from '../components/Avatar';
 import { formatMemberSinceYear } from '../utils/format';
 import './ListView.css';
 
 type Props = {
+  query: string;
   onSelectPerson: (id: string) => void;
 };
 
-export function ListView({ onSelectPerson }: Props) {
+export function ListView({ query, onSelectPerson }: Props) {
   const { people, households } = usePeople();
-  const [query, setQuery] = useState('');
 
   const groups = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -33,16 +33,6 @@ export function ListView({ onSelectPerson }: Props) {
 
   return (
     <div className="list-view">
-      <div className="list-view__search-wrap">
-        <input
-          className="list-view__search t-body"
-          type="search"
-          placeholder="Search people"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </div>
-
       <div className="list-view__groups">
         {groups.map(({ household, members }) => (
           <div key={household.id} className="list-view__group">

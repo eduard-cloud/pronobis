@@ -3,31 +3,8 @@
   overflow-y: auto;
 }
 
-.list-view__search-wrap {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background: var(--paper);
-  padding: 0 20px 12px;
-}
-
-.list-view__search {
-  width: 100%;
-  padding: 14px 18px;
-  border-radius: var(--r-pill);
-  border: 1px solid rgba(12, 15, 20, 0.12);
-  background: #fff;
-  font-size: 16px;
-  color: var(--ink);
-  outline: none;
-}
-
-.list-view__search::placeholder {
-  color: var(--muted);
-}
-
 .list-view__groups {
-  padding: 4px 20px calc(120px + env(safe-area-inset-bottom));
+  padding: calc(84px + env(safe-area-inset-top) + 12px) 20px calc(120px + env(safe-area-inset-bottom));
 }
 
 .list-view__group {

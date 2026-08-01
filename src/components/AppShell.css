@@ -6,14 +6,6 @@
   background: var(--paper);
 }
 
-.app-shell__header {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: calc(16px + env(safe-area-inset-top)) 20px 16px;
-}
-
 .app-shell__content {
   flex: 1 1 auto;
   min-height: 0;

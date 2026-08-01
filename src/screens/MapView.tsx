@@ -8,6 +8,7 @@ import { MAPBOX_TILE_URL } from '../config';
 import './MapView.css';
 
 type Props = {
+  query: string;
   onSelectPerson: (id: string) => void;
 };
 
@@ -20,7 +21,7 @@ function FitBounds({ bounds }: { bounds: L.LatLngBounds }) {
   return null;
 }
 
-export function MapView({ onSelectPerson }: Props) {
+export function MapView({ query, onSelectPerson }: Props) {
   const { people, households } = usePeople();
 
   const householdGroups = useMemo(
@@ -35,6 +36,16 @@ export function MapView({ onSelectPerson }: Props) {
         .filter((g) => g.members.length > 0),
     [people, households]
   );
+
+  const visibleGroups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return householdGroups;
+    return householdGroups.filter(
+      ({ household, members }) =>
+        household.label.toLowerCase().includes(q) ||
+        members.some((p) => `${p.firstName} ${p.lastName}`.toLowerCase().includes(q))
+    );
+  }, [householdGroups, query]);
 
   const bounds = useMemo(() => {
     const points = householdGroups
@@ -60,7 +71,7 @@ export function MapView({ onSelectPerson }: Props) {
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
         {bounds && <FitBounds bounds={bounds} />}
-        {householdGroups.map(({ household, members }) => (
+        {visibleGroups.map(({ household, members }) => (
           <FamilyBunchMarker
             key={household.id}
             household={household}

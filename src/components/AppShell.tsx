@@ -5,20 +5,16 @@ import './AppShell.css';
 type View = 'list' | 'map';
 
 type Props = {
-  title: string;
-  avatarSlot?: React.ReactNode;
+  topBar: React.ReactNode;
   children: (view: View) => React.ReactNode;
 };
 
-export function AppShell({ title, avatarSlot, children }: Props) {
+export function AppShell({ topBar, children }: Props) {
   const [view, setView] = useState<View>('list');
 
   return (
     <div className="app-shell">
-      <header className="app-shell__header">
-        <h1 className="t-title">{title}</h1>
-        {avatarSlot}
-      </header>
+      {topBar}
 
       <main className="app-shell__content">{children(view)}</main>
 
