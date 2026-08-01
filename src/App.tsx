@@ -42,7 +42,7 @@ function App() {
       >
         {(view) => {
           if (view === 'map') return <MapView query={query} onSelectPerson={setSelectedPersonId} />;
-          if (view === 'grid') return <GridView />;
+          if (view === 'grid') return <GridView query={query} onSelectPerson={setSelectedPersonId} />;
           return <ListView query={query} onSelectPerson={setSelectedPersonId} />;
         }}
       </AppShell>
