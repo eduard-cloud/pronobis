@@ -1,31 +1,59 @@
 .list-view {
   height: 100%;
   overflow-y: auto;
+  background: #f0f5f4;
 }
 
-.list-view__groups {
-  padding: calc(84px + env(safe-area-inset-top) + 12px) 20px calc(120px + env(safe-area-inset-bottom));
+.list-view__sections {
+  padding: calc(84px + env(safe-area-inset-top) + 8px) 20px calc(140px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.list-view__group {
-  margin-bottom: 8px;
+.list-view__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.list-view__group-label {
-  color: var(--muted);
-  padding: 16px 4px 8px;
+.list-view__section-label {
+  margin: 0;
+  padding: 0 12px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.26px;
+  color: #a8acba;
+}
+
+.list-view__sheet {
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  padding: 4px 0;
+}
+
+.list-view__household + .list-view__household {
+  margin-top: 0;
+}
+
+.list-view__separator {
+  height: 1px;
+  margin: 0 16px;
+  background: #f2f2f2;
 }
 
 .list-view__row {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 4px;
+  gap: 8px;
+  padding: 12px 16px;
   background: none;
   border: none;
   text-align: left;
-  min-height: 44px;
 }
 
 .list-view__row-info {
@@ -33,22 +61,32 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  justify-content: center;
+  height: 60px;
 }
 
 .list-view__row-name {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 17px;
   line-height: 22px;
-  color: var(--ink);
+  letter-spacing: -0.43px;
+  color: #123933;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.list-view__row-since {
-  color: var(--muted);
+.list-view__row-subtitle {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.23px;
+  color: rgba(18, 57, 51, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .list-view__row-family {
@@ -58,7 +96,13 @@
 }
 
 .list-view__row-family-avatar {
-  box-shadow: 0 1px 4px rgba(12, 15, 20, 0.2);
+  margin-left: -8px;
+  border-width: 1.5px !important;
+  box-shadow: none !important;
+}
+
+.list-view__row-family-avatar:first-child {
+  margin-left: 0;
 }
 
 .list-view__empty {

@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { SegmentedControl } from './SegmentedControl';
+import { TabBar, type View } from './TabBar';
 import './AppShell.css';
-
-type View = 'list' | 'map';
 
 type Props = {
   topBar: React.ReactNode;
+  query: string;
+  onQueryChange: (query: string) => void;
   children: (view: View) => React.ReactNode;
 };
 
-export function AppShell({ topBar, children }: Props) {
+export function AppShell({ topBar, query, onQueryChange, children }: Props) {
   const [view, setView] = useState<View>('list');
 
   return (
@@ -18,14 +18,7 @@ export function AppShell({ topBar, children }: Props) {
 
       <main className="app-shell__content">{children(view)}</main>
 
-      <SegmentedControl
-        segments={[
-          { key: 'list', label: 'List' },
-          { key: 'map', label: 'Map' },
-        ]}
-        value={view}
-        onChange={(key) => setView(key as View)}
-      />
+      <TabBar view={view} onViewChange={setView} query={query} onQueryChange={onQueryChange} />
     </div>
   );
 }

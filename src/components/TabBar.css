@@ -1,0 +1,136 @@
+.tab-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 25px calc(25px + env(safe-area-inset-bottom));
+}
+
+.tab-bar__tabs {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 2px;
+  border-radius: var(--r-pill);
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+.tab-bar__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 6px 8px 7px;
+}
+
+.tab-bar__tab-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  width: 100%;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  color: #1a1a1a;
+}
+
+.tab-bar__tab--active .tab-bar__tab-pill {
+  background: #ededed;
+  color: #174c44;
+}
+
+.tab-bar__tab-label {
+  font-family: var(--font-display);
+  font-weight: 590;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: -0.1px;
+}
+
+.tab-bar__search-trigger {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: var(--r-pill);
+  color: #174c44;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+.tab-bar__search {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 54px;
+  padding: 0 8px 0 18px;
+  border-radius: var(--r-pill);
+  min-width: 0;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+.tab-bar__search-icon {
+  display: flex;
+  color: #174c44;
+  flex: 0 0 auto;
+}
+
+.tab-bar__search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: none;
+  outline: none;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: #123933;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.tab-bar__search-input::-webkit-search-cancel-button,
+.tab-bar__search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.tab-bar__search-input::placeholder {
+  color: rgba(18, 57, 51, 0.5);
+}
+
+.tab-bar__search-close {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(18, 57, 51, 0.08);
+  color: #174c44;
+}

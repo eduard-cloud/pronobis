@@ -4,6 +4,7 @@ import { ProfileSheet } from './components/ProfileSheet';
 import { TopNavBar } from './components/TopNavBar';
 import { ListView } from './screens/ListView';
 import { MapView } from './screens/MapView';
+import { GridView } from './screens/GridView';
 import { GateScreen } from './screens/GateScreen';
 import { OnboardingFlow } from './screens/OnboardingFlow';
 import { EditProfileForm } from './screens/EditProfileForm';
@@ -32,20 +33,18 @@ function App() {
       <AppShell
         topBar={
           <TopNavBar
-            query={query}
-            onQueryChange={setQuery}
             onEditProfile={() => currentUserId && setEditingPersonId(currentUserId)}
             onReset={resetDemo}
           />
         }
+        query={query}
+        onQueryChange={setQuery}
       >
-        {(view) =>
-          view === 'list' ? (
-            <ListView query={query} onSelectPerson={setSelectedPersonId} />
-          ) : (
-            <MapView query={query} onSelectPerson={setSelectedPersonId} />
-          )
-        }
+        {(view) => {
+          if (view === 'map') return <MapView query={query} onSelectPerson={setSelectedPersonId} />;
+          if (view === 'grid') return <GridView />;
+          return <ListView query={query} onSelectPerson={setSelectedPersonId} />;
+        }}
       </AppShell>
 
       <ProfileSheet
