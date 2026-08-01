@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
-import { MAPBOX_TILE_URL } from '../config';
+import { MAPBOX_STOCK_TILE_URL } from '../config';
 import { TIMISOARA_AREAS } from '../data/timisoaraAreas';
 import { Chip } from './Chip';
 import './LocationPicker.css';
@@ -46,14 +46,14 @@ export function LocationPicker({ value, label, onChange, onLabelChange }: Props)
           className="location-picker__map"
           zoomControl={false}
         >
-          <TileLayer url={MAPBOX_TILE_URL} tileSize={256} detectRetina />
+          <TileLayer url={MAPBOX_STOCK_TILE_URL} tileSize={256} detectRetina />
           <RecenterOnChange lat={value.lat} lng={value.lng} />
           <Marker
             position={[value.lat, value.lng]}
             icon={pinIcon}
             draggable
             eventHandlers={{
-              dragend: (e) => {
+              dragend: (e: L.LeafletEvent) => {
                 const pos = (e.target as L.Marker).getLatLng();
                 onChange({ lat: pos.lat, lng: pos.lng });
               },
