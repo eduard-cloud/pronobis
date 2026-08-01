@@ -59,6 +59,9 @@ export function FamilyBunchMarker({ household, members, onSelectPerson }: Props)
       position={[location.lat, location.lng]}
       icon={icon}
       alt={household.label}
+      ref={(marker) => {
+        if (marker) (marker.options as { memberCount?: number }).memberCount = adults.length;
+      }}
       eventHandlers={{
         click: (e) => {
           const target = e.originalEvent.target as HTMLElement;

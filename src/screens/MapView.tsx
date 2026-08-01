@@ -1,10 +1,16 @@
 import { useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
 import L from 'leaflet';
 import { usePeople } from '../data/store';
 import { FamilyBunchMarker } from '../map/FamilyBunchMarker';
+import { createClusterIcon } from '../map/clusterIcon';
+import { TIMISOARA_CENTER } from '../data/timisoaraAreas';
 import type { Person } from '../types';
 import { MAPBOX_TILE_URL } from '../config';
+import '../map/clusterIcon.css';
 import './MapView.css';
 
 type Props = {
@@ -59,8 +65,8 @@ export function MapView({ query, onSelectPerson }: Props) {
   return (
     <div className="map-view">
       <MapContainer
-        center={[45.9432, 24.9668]}
-        zoom={7}
+        center={[TIMISOARA_CENTER.lat, TIMISOARA_CENTER.lng]}
+        zoom={12}
         className="map-view__map"
         zoomControl={false}
       >
@@ -71,14 +77,21 @@ export function MapView({ query, onSelectPerson }: Props) {
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
         {bounds && <FitBounds bounds={bounds} />}
-        {visibleGroups.map(({ household, members }) => (
-          <FamilyBunchMarker
-            key={household.id}
-            household={household}
-            members={members}
-            onSelectPerson={onSelectPerson}
-          />
-        ))}
+        <MarkerClusterGroup
+          iconCreateFunction={createClusterIcon}
+          maxClusterRadius={70}
+          showCoverageOnHover={false}
+          spiderfyOnMaxZoom
+        >
+          {visibleGroups.map(({ household, members }) => (
+            <FamilyBunchMarker
+              key={household.id}
+              household={household}
+              members={members}
+              onSelectPerson={onSelectPerson}
+            />
+          ))}
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );

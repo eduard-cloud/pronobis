@@ -1,5 +1,6 @@
 import type { Household, Person } from '../types';
 import { generateInitialsAvatar } from './avatar';
+import { TIMISOARA_AREAS } from './timisoaraAreas';
 
 type SeedInput = {
   id: string;
@@ -12,14 +13,23 @@ type SeedInput = {
   householdId: string;
 };
 
+function area(label: string): { lat: number; lng: number; label: string } {
+  const found = TIMISOARA_AREAS.find((a) => a.label === label);
+  if (!found) throw new Error(`Unknown Timișoara area: ${label}`);
+  return found;
+}
+
+// Most of the community lives in or around Timișoara. Two households share
+// Dumbrăvița and two share Fabric on purpose, so the map has real clusters
+// to break apart as you zoom in instead of one pin per neighborhood.
 const CITIES: Record<string, { lat: number; lng: number; label: string }> = {
-  cluj: { lat: 46.7712, lng: 23.6236, label: 'Cluj-Napoca' },
-  bucuresti: { lat: 44.4268, lng: 26.1025, label: 'București' },
-  timisoara: { lat: 45.7489, lng: 21.2087, label: 'Timișoara' },
-  iasi: { lat: 47.1585, lng: 27.6014, label: 'Iași' },
-  brasov: { lat: 45.6427, lng: 25.5887, label: 'Brașov' },
-  sibiu: { lat: 45.7983, lng: 24.1256, label: 'Sibiu' },
-  constanta: { lat: 44.1598, lng: 28.6348, label: 'Constanța' },
+  dumbravita: area('Dumbrăvița'),
+  sag: area('Șag'),
+  fabric: area('Fabric'),
+  lunei: area('Zona Lunei'),
+  iosefin: area('Iosefin'),
+  elisabetin: area('Elisabetin'),
+  girocului: area('Girocului'),
 };
 
 const households: {
@@ -32,7 +42,7 @@ const households: {
   {
     id: 'h1',
     label: 'Popescu',
-    city: 'cluj',
+    city: 'dumbravita',
     memberSince: '2019-03',
     members: [
       {
@@ -80,7 +90,7 @@ const households: {
   {
     id: 'h2',
     label: 'Ionescu',
-    city: 'bucuresti',
+    city: 'sag',
     memberSince: '2022-01',
     members: [
       {
@@ -98,7 +108,7 @@ const households: {
   {
     id: 'h3',
     label: 'Dumitrescu',
-    city: 'timisoara',
+    city: 'fabric',
     memberSince: '2017-09',
     members: [
       {
@@ -136,7 +146,7 @@ const households: {
   {
     id: 'h4',
     label: 'Georgescu',
-    city: 'cluj',
+    city: 'lunei',
     memberSince: '2021-05',
     members: [
       {
@@ -154,7 +164,7 @@ const households: {
   {
     id: 'h5',
     label: 'Constantin',
-    city: 'iasi',
+    city: 'fabric',
     memberSince: '2015-02',
     members: [
       {
@@ -212,7 +222,7 @@ const households: {
   {
     id: 'h6',
     label: 'Marin',
-    city: 'brasov',
+    city: 'dumbravita',
     memberSince: '2023-06',
     members: [
       {
@@ -230,7 +240,7 @@ const households: {
   {
     id: 'h7',
     label: 'Stan',
-    city: 'sibiu',
+    city: 'iosefin',
     memberSince: '2020-10',
     members: [
       {
@@ -268,7 +278,7 @@ const households: {
   {
     id: 'h8',
     label: 'Rusu',
-    city: 'cluj',
+    city: 'elisabetin',
     memberSince: '2024-02',
     members: [
       {
@@ -286,7 +296,7 @@ const households: {
   {
     id: 'h9',
     label: 'Vasilescu',
-    city: 'constanta',
+    city: 'girocului',
     memberSince: '2016-08',
     members: [
       {
