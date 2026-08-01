@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { usePeople } from '../data/store';
 import { Avatar } from '../components/Avatar';
+import { getInitials, isGeneratedAvatar } from '../data/avatar';
 import { formatAge, formatMemberSinceYear } from '../utils/format';
 import type { Household, Person } from '../types';
 import './ListView.css';
@@ -12,6 +13,32 @@ type Props = {
 
 type HouseholdGroup = { household: Household; members: Person[] };
 type LetterSection = { letter: string; households: HouseholdGroup[] };
+
+/**
+ * Figma's List View treats every no-photo person with one flat neutral
+ * circle (#e6eae9 / #4c6b67), not the app-wide multi-color initials
+ * palette used elsewhere (e.g. map pins) — so this renders that exact
+ * look locally instead of reusing the shared colored-initials avatar.
+ */
+function PersonAvatar({ person, size }: { person: Person; size: 48 | 24 }) {
+  if (!isGeneratedAvatar(person.photo)) {
+    return <Avatar src={person.photo} alt={person.firstName} size={size} />;
+  }
+  return (
+    <span
+      className="list-view__initials"
+      style={{
+        width: size,
+        height: size,
+        fontSize: size === 48 ? 20 : 10,
+        letterSpacing: size === 48 ? '-0.86px' : '-0.43px',
+        borderWidth: size === 48 ? 2.311 : 1.156,
+      }}
+    >
+      {getInitials(person.firstName, person.lastName)}
+    </span>
+  );
+}
 
 export function ListView({ query, onSelectPerson }: Props) {
   const { people, households } = usePeople();
@@ -76,7 +103,7 @@ export function ListView({ query, onSelectPerson }: Props) {
                         className="list-view__row"
                         onClick={() => onSelectPerson(person.id)}
                       >
-                        <Avatar src={person.photo} alt={person.firstName} size={48} />
+                        <PersonAvatar person={person} size={48} />
                         <span className="list-view__row-info">
                           <span className="list-view__row-name">
                             {person.firstName} {person.lastName}
@@ -88,13 +115,9 @@ export function ListView({ query, onSelectPerson }: Props) {
                         {!isChild && others.length > 0 && (
                           <span className="list-view__row-family">
                             {others.slice(0, 3).map((o) => (
-                              <Avatar
-                                key={o.id}
-                                src={o.photo}
-                                alt={o.firstName}
-                                size={24}
-                                className="list-view__row-family-avatar"
-                              />
+                              <span key={o.id} className="list-view__row-family-avatar">
+                                <PersonAvatar person={o} size={24} />
+                              </span>
                             ))}
                           </span>
                         )}

@@ -10,45 +10,87 @@
   padding: 16px 25px calc(25px + env(safe-area-inset-bottom));
 }
 
-.tab-bar__tabs {
+/* Liquid Glass recipe from Figma: rgba(255,255,255,0.65) base blended with
+   a #e6eae9 color-burn layer and an #f7f7f7 darken layer (the actual
+   layer stack used for these pills), plus a 1px gradient rim
+   approximating the native refraction highlight — Figma's Liquid Glass
+   effect (Dispersion/Refraction/Splay tokens) isn't literally expressible
+   in CSS, so the rim is a best-effort stand-in, not a literal match. */
+.tab-bar__tabs,
+.tab-bar__search-trigger,
+.tab-bar__search {
   position: relative;
+  background-color: rgba(255, 255, 255, 0.65);
+  background-image:
+    linear-gradient(#e6eae9, #e6eae9),
+    linear-gradient(#f7f7f7, #f7f7f7);
+  background-blend-mode: color-burn, darken;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  border-radius: var(--r-pill);
+}
+
+.tab-bar__tabs::after,
+.tab-bar__search-trigger::after,
+.tab-bar__search::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.35) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.tab-bar__tabs {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
   min-width: 0;
   padding: 0 2px;
-  border-radius: var(--r-pill);
-
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
 }
 
 .tab-bar__tab {
   flex: 1 1 0;
   min-width: 0;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   background: none;
-  padding: 6px 8px 7px;
+  padding: 0;
 }
 
 .tab-bar__tab-pill {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1px;
   width: 100%;
-  padding: 4px 10px;
+  height: 100%;
+  padding: 6px 8px 7px;
   border-radius: var(--r-pill);
   color: #1a1a1a;
 }
 
 .tab-bar__tab--active .tab-bar__tab-pill {
   background: #ededed;
+}
+
+.tab-bar__tab[data-tint='teal'] .tab-bar__tab-pill {
   color: #174c44;
 }
 
@@ -68,13 +110,7 @@
   width: 54px;
   height: 54px;
   border: none;
-  border-radius: var(--r-pill);
   color: #174c44;
-
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
 }
 
 .tab-bar__search {
@@ -84,13 +120,7 @@
   gap: 8px;
   height: 54px;
   padding: 0 8px 0 18px;
-  border-radius: var(--r-pill);
   min-width: 0;
-
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
 }
 
 .tab-bar__search-icon {

@@ -8,7 +8,7 @@
   padding: calc(84px + env(safe-area-inset-top) + 8px) 20px calc(140px + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 24px;
 }
 
 .list-view__section {
@@ -29,10 +29,11 @@
 }
 
 .list-view__sheet {
-  border-radius: 20px;
+  border-radius: 34px;
   background: #fff;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
   padding: 4px 0;
+  overflow: hidden;
 }
 
 .list-view__household + .list-view__household {
@@ -97,12 +98,32 @@
 
 .list-view__row-family-avatar {
   margin-left: -8px;
-  border-width: 1.5px !important;
-  box-shadow: none !important;
+  display: flex;
+  line-height: 0;
 }
 
 .list-view__row-family-avatar:first-child {
   margin-left: 0;
+}
+
+.list-view__row-family-avatar .avatar {
+  border-width: 1.156px !important;
+  box-shadow: none !important;
+}
+
+.list-view__initials {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 0 solid #fff;
+  background: #e6eae9;
+  color: #4c6b67;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-align: center;
 }
 
 .list-view__empty {

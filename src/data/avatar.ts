@@ -29,3 +29,12 @@ export function generateInitialsAvatar(
 
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
+
+export function getInitials(firstName: string, lastName: string): string {
+  return `${firstName[0] ?? ''}${lastName[0] ?? ''}`.toUpperCase();
+}
+
+/** True when `photo` is our generated colored-initials avatar (no real photo uploaded). */
+export function isGeneratedAvatar(photo: string): boolean {
+  return photo.startsWith('data:image/svg+xml');
+}

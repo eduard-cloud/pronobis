@@ -11,9 +11,12 @@ type Props = {
   onQueryChange: (query: string) => void;
 };
 
-const TABS: { key: View; label: string; icon: typeof SFMap }[] = [
-  { key: 'map', label: 'Map', icon: SFMap },
-  { key: 'list', label: 'List', icon: SFPersonCropRectangleStackFill },
+// Figma codes Map and List as teal (#174c44) and Grid as near-black
+// (#1a1a1a) regardless of selection; reproduced literally via data-tint
+// rather than substituting a generic active/inactive rule.
+const TABS: { key: View; label: string; icon: typeof SFMap; tint?: 'teal' }[] = [
+  { key: 'map', label: 'Map', icon: SFMap, tint: 'teal' },
+  { key: 'list', label: 'List', icon: SFPersonCropRectangleStackFill, tint: 'teal' },
   { key: 'grid', label: 'Grid', icon: SFCircleGrid2x2 },
 ];
 
@@ -53,10 +56,11 @@ export function TabBar({ view, onViewChange, query, onQueryChange }: Props) {
       ) : (
         <>
           <div className="tab-bar__tabs">
-            {TABS.map(({ key, label, icon: Icon }) => (
+            {TABS.map(({ key, label, icon: Icon, tint }) => (
               <button
                 key={key}
                 type="button"
+                data-tint={tint}
                 className={'tab-bar__tab' + (view === key ? ' tab-bar__tab--active' : '')}
                 onClick={() => onViewChange(key)}
               >

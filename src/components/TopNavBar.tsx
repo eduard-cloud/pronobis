@@ -20,9 +20,8 @@ export function TopNavBar({ onEditProfile, onReset }: Props) {
 
         <div className="top-nav__chip top-nav__pill">
           <AvatarMenu onEditProfile={onEditProfile} onReset={onReset} size={36} />
-          <div className="top-nav__divider" />
           <button type="button" className="top-nav__bell" aria-label="Notifications">
-            <SFBellBadge size={19} />
+            <SFBellBadge size={15} />
           </button>
         </div>
       </div>
