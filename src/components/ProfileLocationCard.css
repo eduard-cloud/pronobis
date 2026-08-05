@@ -1,0 +1,48 @@
+.profile-location-card {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  flex-shrink: 0;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 4px 16px rgba(12, 15, 20, 0.12);
+}
+
+.profile-location-card__map {
+  height: 100%;
+  width: 100%;
+}
+
+.profile-location-card__recenter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(12, 15, 20, 0.25);
+  cursor: pointer;
+}
+
+.profile-location-card__pin-icon {
+  background: transparent;
+  border: none;
+}
+
+.profile-location-card__pin {
+  width: 20px;
+  height: 20px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--orange);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}

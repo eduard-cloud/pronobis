@@ -59,12 +59,12 @@
 }
 
 .profile-sheet__photo-wrap {
-  width: 128px;
-  height: 128px;
+  width: 168px;
+  height: 168px;
+  flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 20px;
-  border: 3px solid rgba(12, 15, 20, 0.1);
   box-shadow: 0 8px 24px rgba(12, 15, 20, 0.18);
 }
 
@@ -83,12 +83,18 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 20px;
+}
+
+.profile-sheet__chips .chip {
+  font-size: 12px;
+  padding: 6px 10px;
 }
 
 .profile-sheet__connections {
   display: flex;
+  flex-shrink: 0;
   gap: 18px;
   overflow-x: auto;
   padding: 4px 4px 20px;
@@ -106,18 +112,9 @@
   flex: 0 0 auto;
 }
 
-.profile-sheet__connection-label {
-  color: var(--muted);
-}
-
 .profile-sheet__connection-name {
   font-size: 13px;
   font-weight: 600;
-}
-
-.profile-sheet__location {
-  color: var(--muted);
-  margin-bottom: 16px;
 }
 
 .profile-sheet__bio {
@@ -137,6 +134,10 @@
 .profile-sheet__interests .chip--outline {
   border-color: rgba(12, 15, 20, 0.16);
   color: var(--ink);
+}
+
+.profile-sheet__scroll > .profile-location-card {
+  margin-bottom: 20px;
 }
 
 .profile-sheet__edit-pill {

@@ -18,6 +18,7 @@
   --separator-dark: rgba(84, 84, 88, 0.6);
 
   --r-sheet: 28px;
+  --r-card: 18px;
   --r-pill: 999px;
 
   /* SF Pro on Apple platforms via the system stack; graceful fallback elsewhere */

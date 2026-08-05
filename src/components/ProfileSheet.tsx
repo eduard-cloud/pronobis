@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePeople } from '../data/store';
 import { Avatar } from './Avatar';
 import { Chip } from './Chip';
-import { deriveRelationLabel } from '../utils/relations';
+import { ProfileLocationCard } from './ProfileLocationCard';
 import { formatAge, formatBirthDate, formatMemberSince } from '../utils/format';
 import './ProfileSheet.css';
 
@@ -94,10 +94,12 @@ export function ProfileSheet({ personId, onClose, onSelectPerson, onEdit }: Prop
           </h2>
 
           <div className="profile-sheet__chips">
-            <Chip variant="cyan">
+            <Chip variant="outline">
               {formatAge(person.birthDate)} · {formatBirthDate(person.birthDate)}
             </Chip>
-            <Chip variant="cyan">{formatMemberSince(person.memberSince)}</Chip>
+            <Chip variant="outline">
+              Joined ProNobis in {formatMemberSince(person.memberSince).replace('Since ', '')}
+            </Chip>
           </div>
 
           {connections.length > 0 && (
@@ -110,18 +112,13 @@ export function ProfileSheet({ personId, onClose, onSelectPerson, onEdit }: Prop
                   onClick={() => onSelectPerson(c.id)}
                 >
                   <Avatar src={c.photo} alt={`${c.firstName} ${c.lastName}`} size={52} />
-                  <span className="t-caption profile-sheet__connection-label">
-                    {deriveRelationLabel(person, c)}
-                  </span>
                   <span className="profile-sheet__connection-name">{c.firstName}</span>
                 </button>
               ))}
             </div>
           )}
 
-          {person.location && (
-            <p className="t-caption profile-sheet__location">{person.location.label}</p>
-          )}
+          {person.location && <ProfileLocationCard location={person.location} />}
 
           <p className="t-body profile-sheet__bio">{person.bio}</p>
 
