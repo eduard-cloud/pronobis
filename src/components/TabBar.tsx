@@ -9,6 +9,7 @@ type Props = {
   onViewChange: (view: View) => void;
   query: string;
   onQueryChange: (query: string) => void;
+  searchPlaceholder?: string;
 };
 
 // Figma codes Map and List as teal (#174c44) and Grid as near-black
@@ -20,7 +21,7 @@ const TABS: { key: View; label: string; icon: typeof SFMapFill; tint?: 'teal' }[
   { key: 'grid', label: 'Grid', icon: SFCircleGrid2x2 },
 ];
 
-export function TabBar({ view, onViewChange, query, onQueryChange }: Props) {
+export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceholder = 'Search people' }: Props) {
   const [searching, setSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,7 +46,7 @@ export function TabBar({ view, onViewChange, query, onQueryChange }: Props) {
             ref={inputRef}
             className="tab-bar__search-input"
             type="search"
-            placeholder="Search people"
+            placeholder={searchPlaceholder}
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
           />
