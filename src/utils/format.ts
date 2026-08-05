@@ -6,7 +6,7 @@ export function formatAge(birthDate: string): string {
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
     age--;
   }
-  return `${age} yrs`;
+  return `${age} years old`;
 }
 
 const MONTHS = [
