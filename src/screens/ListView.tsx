@@ -114,7 +114,7 @@ export function ListView({ query, onSelectPerson }: Props) {
                         </span>
                         {!isChild && others.length > 0 && (
                           <span className="list-view__row-family">
-                            {others.slice(0, 3).map((o) => (
+                            {others.map((o) => (
                               <span key={o.id} className="list-view__row-family-avatar">
                                 <PersonAvatar person={o} size={24} />
                               </span>

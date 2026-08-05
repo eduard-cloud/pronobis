@@ -32,7 +32,7 @@
   border-radius: 34px;
   background: #fff;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-  padding: 4px 0;
+  padding: 12px 16px;
   overflow: hidden;
 }
 
@@ -42,7 +42,7 @@
 
 .list-view__separator {
   height: 1px;
-  margin: 0 16px;
+  margin: 0;
   background: #f2f2f2;
 }
 
@@ -109,6 +109,11 @@
 .list-view__row-family-avatar .avatar {
   border-width: 1.156px !important;
   box-shadow: none !important;
+}
+
+.list-view__row > .avatar {
+  border: none;
+  box-shadow: none;
 }
 
 .list-view__initials {
