@@ -3,8 +3,8 @@ import {
   SFMagnifyingglass,
   SFMap,
   SFMapFill,
-  SFPersonCropRectangleStack,
-  SFPersonCropRectangleStackFill,
+  SFPerson2,
+  SFPerson2Fill,
   SFXmark,
 } from 'sf-symbols-lib/monochrome';
 import './TabBar.css';
@@ -23,7 +23,7 @@ type Props = {
 // to the filled variant when its tab is selected, per Figma.
 const TABS: { key: View; label: string; icon: typeof SFMapFill; activeIcon: typeof SFMapFill }[] = [
   { key: 'map', label: 'Map', icon: SFMap, activeIcon: SFMapFill },
-  { key: 'list', label: 'List', icon: SFPersonCropRectangleStack, activeIcon: SFPersonCropRectangleStackFill },
+  { key: 'list', label: 'List', icon: SFPerson2, activeIcon: SFPerson2Fill },
 ];
 
 export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceholder = 'Search people' }: Props) {
@@ -65,6 +65,7 @@ export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceho
             {TABS.map(({ key, label, icon: Icon, activeIcon: ActiveIcon }) => {
               const active = view === key;
               const TabIcon = active ? ActiveIcon : Icon;
+              const iconSize = key === 'list' ? 20 : 18;
               return (
                 <button
                   key={key}
@@ -73,7 +74,7 @@ export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceho
                   onClick={() => onViewChange(key)}
                 >
                   <span className="tab-bar__tab-pill">
-                    <TabIcon size={18} />
+                    <TabIcon size={iconSize} />
                     <span className="tab-bar__tab-label">{label}</span>
                   </span>
                 </button>
