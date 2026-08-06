@@ -26,7 +26,6 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
   border-radius: var(--r-pill);
-  padding: 4px;
 }
 
 .map-mode-switch::after {
