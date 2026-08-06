@@ -1,0 +1,184 @@
+.event-marker-icon,
+.event-cluster-icon,
+.city-bubble-icon {
+  background: transparent;
+  border: none;
+}
+
+/* Squircle tile + tail: shape (squircle vs circle), fill (flat color vs
+   photo), and the downward tail together separate an event pin from a
+   person marker at a glance, before any reading. */
+.event-marker__tile {
+  --zoom-scale: 1;
+  --hover-scale: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(12, 15, 20, 0.35);
+  cursor: pointer;
+  transform-origin: 50% calc(100% - 4px);
+  transform: scale(calc(var(--zoom-scale) * var(--hover-scale)));
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.2s ease;
+  will-change: transform;
+  animation: person-marker-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.event-marker__tile:hover {
+  --hover-scale: 1.12;
+  box-shadow: 0 4px 14px rgba(12, 15, 20, 0.45);
+}
+
+.event-marker__glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.event-marker__glyph svg {
+  width: 20px;
+  height: 20px;
+}
+
+.event-marker__tail {
+  width: 0;
+  height: 0;
+  margin: -1px auto 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid;
+  filter: drop-shadow(0 2px 2px rgba(12, 15, 20, 0.2));
+}
+
+/* Only genuinely-live pins pulse — reserving motion for what's urgent means
+   it still reads as a signal when it appears. */
+.event-marker__tile--live::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--live-ring-color, currentColor);
+  animation: event-marker-live-pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes event-marker-live-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.event-cluster {
+  --zoom-scale: 1;
+  --hover-scale: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 8px;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(12, 15, 20, 0.35);
+  cursor: pointer;
+  transform-origin: 50% 50%;
+  transform: scale(calc(var(--zoom-scale) * var(--hover-scale)));
+  transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+  will-change: transform;
+  animation: person-marker-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.event-cluster:hover {
+  --hover-scale: 1.08;
+}
+
+.event-cluster__glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.event-cluster__glyph svg {
+  width: 18px;
+  height: 18px;
+}
+
+.event-cluster__count {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.city-bubble {
+  --zoom-scale: 1;
+  --hover-scale: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transform-origin: 50% 0%;
+  transform: scale(calc(var(--zoom-scale) * var(--hover-scale)));
+  transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+  cursor: pointer;
+  will-change: transform;
+  animation: person-marker-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.city-bubble:hover {
+  --hover-scale: 1.08;
+}
+
+.city-bubble__pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+  background: #174c44;
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 16px rgba(12, 15, 20, 0.35);
+}
+
+.city-bubble__glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.city-bubble__glyph svg {
+  width: 16px;
+  height: 16px;
+}
+
+.city-bubble__count {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.city-bubble__label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11px;
+  color: #174c44;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}

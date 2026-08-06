@@ -16,6 +16,7 @@ type Props = {
   onViewChange: (view: View) => void;
   query: string;
   onQueryChange: (query: string) => void;
+  searchPlaceholder?: string;
 };
 
 // Grid is hidden for now (Figma tab bar only shows Map/List). Icon swaps
@@ -25,7 +26,7 @@ const TABS: { key: View; label: string; icon: typeof SFMapFill; activeIcon: type
   { key: 'list', label: 'List', icon: SFPersonCropRectangleStack, activeIcon: SFPersonCropRectangleStackFill },
 ];
 
-export function TabBar({ view, onViewChange, query, onQueryChange }: Props) {
+export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceholder = 'Search people' }: Props) {
   const [searching, setSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -50,7 +51,7 @@ export function TabBar({ view, onViewChange, query, onQueryChange }: Props) {
             ref={inputRef}
             className="tab-bar__search-input"
             type="search"
-            placeholder="Search people"
+            placeholder={searchPlaceholder}
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
           />
