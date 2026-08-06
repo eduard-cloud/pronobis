@@ -90,7 +90,7 @@
 
 .top-nav__pill {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   padding: 4px;
   flex: 0 0 auto;
 }
@@ -98,7 +98,7 @@
 .top-nav__divider {
   align-self: stretch;
   width: 1px;
-  margin: 6px 8px;
+  margin: 0 8px;
   background: rgba(255, 255, 255, 0.6);
 }
 
