@@ -47,7 +47,6 @@
   border-radius: var(--r-pill);
 }
 
-.tab-bar__tabs::after,
 .tab-bar__search-trigger::after,
 .tab-bar__search::after {
   content: '';
@@ -61,6 +60,34 @@
     rgba(255, 255, 255, 0.05) 40%,
     rgba(255, 255, 255, 0.35) 100%
   );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Liquid-glass rim for the Map/List pill: a curved highlight that wraps
+   from the top edge down the left side and tapers away on the right,
+   matching the Figma "Glass Effect" refraction outline. */
+.tab-bar__tabs::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--r-pill);
+  padding: 2px;
+  background: conic-gradient(
+    from 210deg at 50% 50%,
+    rgba(255, 255, 255, 0.35) 0deg,
+    #fff 60deg,
+    #fff 110deg,
+    rgba(255, 255, 255, 0.45) 165deg,
+    rgba(255, 255, 255, 0.3) 220deg,
+    #fff 300deg,
+    rgba(255, 255, 255, 0.35) 360deg
+  );
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
