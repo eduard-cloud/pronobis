@@ -1,6 +1,11 @@
 .map-view {
   height: 100%;
   width: 100%;
+  /* MapModeSwitch/TimeFilter are position:fixed (anchored to #root's
+     transform, same as TopNavBar/TabBar), so this isn't load-bearing for
+     their placement — kept as the containing block for any future
+     map-local overlay that shouldn't escape the map pane. */
+  position: relative;
 }
 
 .map-view__map {
