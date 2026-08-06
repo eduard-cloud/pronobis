@@ -9,7 +9,7 @@ import {
 import type { Household, Person } from '../types';
 import { seedHouseholds, seedPeople } from './seed';
 
-const STORAGE_KEY = 'pronobis.v1';
+const STORAGE_KEY = 'pronobis.v2';
 
 type StoredState = {
   people: Person[];
