@@ -23,7 +23,6 @@
    ::before rather than growing the row itself so click targets and the
    outer bar's layout height stay exactly per spec. */
 .tab-bar__tabs::before,
-.tab-bar__search-trigger::before,
 .tab-bar__search::before {
   content: '';
   position: absolute;
@@ -37,6 +36,18 @@
   background-blend-mode: color-burn, darken;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Plain white surface for the search trigger — no color-burn/darken glass
+   blend, so it doesn't pick up a grey/green tint from the map underneath. */
+.tab-bar__search-trigger::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  z-index: -1;
+  border-radius: var(--r-pill);
+  background: #fff;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
 }
 
