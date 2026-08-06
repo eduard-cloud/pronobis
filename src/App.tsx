@@ -65,6 +65,7 @@ function App() {
           ProfileSheet on top — both overlays share z-index: 60, so DOM
           order is what decides who wins. */}
       <ProfileSheet
+        key={selectedPersonId}
         personId={selectedPersonId}
         onClose={() => setSelectedPersonId(null)}
         onSelectPerson={setSelectedPersonId}
