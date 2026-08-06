@@ -17,7 +17,7 @@ function App() {
   const [gatePassed, setGatePassed] = useState(
     () => localStorage.getItem(GATE_STORAGE_KEY) === 'true'
   );
-  const { onboarded, currentUserId, resetDemo } = usePeople();
+  const { onboarded, currentUserId } = usePeople();
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [editingPersonId, setEditingPersonId] = useState<string | null>(null);
@@ -82,7 +82,6 @@ function App() {
             setSettingsOpen(false);
             if (currentUserId) setEditingPersonId(currentUserId);
           }}
-          onReset={resetDemo}
         />
       )}
     </>
