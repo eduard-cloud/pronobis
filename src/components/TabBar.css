@@ -46,30 +46,13 @@
   border-radius: var(--r-pill);
 }
 
+/* Liquid-glass rim shared by the Map/List pill and the search bar/trigger:
+   a curved highlight that wraps from the top edge down the left side and
+   tapers away on the right, matching the Figma "Glass Effect" refraction
+   outline. */
+.tab-bar__tabs::after,
+.tab-bar__search-trigger::after,
 .tab-bar__search::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: var(--r-pill);
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.05) 40%,
-    rgba(255, 255, 255, 0.35) 100%
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Liquid-glass rim for the Map/List pill: a curved highlight that wraps
-   from the top edge down the left side and tapers away on the right,
-   matching the Figma "Glass Effect" refraction outline. */
-.tab-bar__tabs::after {
   content: '';
   position: absolute;
   inset: -4px;
