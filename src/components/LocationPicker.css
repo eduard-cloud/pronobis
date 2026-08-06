@@ -29,19 +29,62 @@
   pointer-events: none;
 }
 
-.location-picker__pin-icon {
-  background: transparent;
-  border: none;
-}
-
-.location-picker__pin {
+.location-picker__center-pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 24px;
   height: 24px;
+  margin-left: -12px;
+  margin-top: -24px;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   background: var(--orange);
   border: 2px solid #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.location-picker__search {
+  position: relative;
+}
+
+.location-picker__suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--paper, #fff);
+  border-radius: var(--r-sheet);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.location-picker__suggestions li + li {
+  margin-top: 2px;
+}
+
+.location-picker__suggestions button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  border-radius: calc(var(--r-sheet) - 6px);
+  font: inherit;
+  cursor: pointer;
+}
+
+.location-picker__suggestions button:hover,
+.location-picker__suggestions button:active {
+  background: rgba(0, 0, 0, 0.06);
 }
 
 .location-picker__presets {
