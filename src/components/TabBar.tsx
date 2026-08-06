@@ -65,6 +65,7 @@ export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceho
             {TABS.map(({ key, label, icon: Icon, activeIcon: ActiveIcon }) => {
               const active = view === key;
               const TabIcon = active ? ActiveIcon : Icon;
+              const iconSize = key === 'list' ? 20 : 18;
               return (
                 <button
                   key={key}
@@ -73,7 +74,7 @@ export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceho
                   onClick={() => onViewChange(key)}
                 >
                   <span className="tab-bar__tab-pill">
-                    <TabIcon size={18} />
+                    <TabIcon size={iconSize} />
                     <span className="tab-bar__tab-label">{label}</span>
                   </span>
                 </button>
