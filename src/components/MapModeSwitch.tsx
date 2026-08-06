@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { SFPerson2Fill, SFCalendar } from 'sf-symbols-lib/monochrome';
+import { SFPerson2, SFPerson2Fill } from 'sf-symbols-lib/monochrome';
 import type { ComponentType } from 'react';
 import './MapModeSwitch.css';
 
@@ -10,9 +10,9 @@ type Props = {
   onModeChange: (mode: MapMode) => void;
 };
 
-const SEGMENTS: { key: MapMode; icon: ComponentType<{ size?: number }>; label: string; ariaLabel: string }[] = [
-  { key: 'people', icon: SFPerson2Fill, label: 'People', ariaLabel: 'Show people on the map' },
-  { key: 'events', icon: SFCalendar, label: 'Events', ariaLabel: 'Show events on the map' },
+const SEGMENTS: { key: MapMode; icon: ComponentType<{ size?: number }>; activeIcon: ComponentType<{ size?: number }>; label: string; ariaLabel: string }[] = [
+  { key: 'people', icon: SFPerson2, label: 'People', activeIcon: SFPerson2Fill, ariaLabel: 'Show people on the map' },
+  { key: 'events', icon: SFPerson2, label: 'Events', activeIcon: SFPerson2Fill, ariaLabel: 'Show events on the map' },
 ];
 
 const SEGMENT_HEIGHT = 56;
@@ -80,7 +80,7 @@ export function MapModeSwitch({ mode, onModeChange }: Props) {
           aria-hidden="true"
           style={{ transform: `translateY(${activeIndex * SEGMENT_HEIGHT}px)` }}
         />
-        {SEGMENTS.map(({ key, icon: Icon, ariaLabel }) => (
+        {SEGMENTS.map(({ key, icon: Icon, activeIcon: ActiveIcon, ariaLabel }) => (
           <button
             key={key}
             type="button"
@@ -90,7 +90,7 @@ export function MapModeSwitch({ mode, onModeChange }: Props) {
             className={'map-mode-switch__segment' + (mode === key ? ' map-mode-switch__segment--active' : '')}
             onClick={() => select(key)}
           >
-            <Icon size={20} />
+            {mode === key ? <ActiveIcon size={20} /> : <Icon size={20} />}
           </button>
         ))}
       </div>
