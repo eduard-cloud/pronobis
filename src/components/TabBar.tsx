@@ -3,8 +3,8 @@ import {
   SFMagnifyingglass,
   SFMap,
   SFMapFill,
-  SFPersonCropRectangleStack,
-  SFPersonCropRectangleStackFill,
+  SFPerson2,
+  SFPerson2Fill,
   SFXmark,
 } from 'sf-symbols-lib/monochrome';
 import './TabBar.css';
@@ -23,7 +23,7 @@ type Props = {
 // to the filled variant when its tab is selected, per Figma.
 const TABS: { key: View; label: string; icon: typeof SFMapFill; activeIcon: typeof SFMapFill }[] = [
   { key: 'map', label: 'Map', icon: SFMap, activeIcon: SFMapFill },
-  { key: 'list', label: 'List', icon: SFPersonCropRectangleStack, activeIcon: SFPersonCropRectangleStackFill },
+  { key: 'list', label: 'List', icon: SFPerson2, activeIcon: SFPerson2Fill },
 ];
 
 export function TabBar({ view, onViewChange, query, onQueryChange, searchPlaceholder = 'Search people' }: Props) {
