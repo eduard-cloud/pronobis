@@ -1,8 +1,12 @@
+/** Pronobis brand teal (#174c44) and gold, plus shades/tints of each —
+ * every pairing verified at 4.5:1+ contrast against its fg color. */
 const PALETTE = [
-  { bg: '#A9DCE6', fg: '#0C0F14' },
-  { bg: '#F58A33', fg: '#0C0F14' },
-  { bg: '#0C0F14', fg: '#F4F3F0' },
-  { bg: '#8A9099', fg: '#0C0F14' },
+  { bg: '#174C44', fg: '#F4F3F0' }, // brand teal
+  { bg: '#0D2B26', fg: '#F4F3F0' }, // teal shade
+  { bg: '#3E7168', fg: '#F4F3F0' }, // teal tint
+  { bg: '#E9C13F', fg: '#0C0F14' }, // brand gold
+  { bg: '#B88F1E', fg: '#0C0F14' }, // gold shade
+  { bg: '#F2D983', fg: '#0C0F14' }, // gold tint
 ];
 
 function hashString(str: string): number {
