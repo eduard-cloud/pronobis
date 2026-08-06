@@ -23,6 +23,7 @@
    ::before rather than growing the row itself so click targets and the
    outer bar's layout height stay exactly per spec. */
 .tab-bar__tabs::before,
+.tab-bar__search-trigger::before,
 .tab-bar__search::before {
   content: '';
   position: absolute;
