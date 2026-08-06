@@ -1,7 +1,6 @@
 import { SFBellBadge } from 'sf-symbols-lib/monochrome';
 import { usePeople } from '../data/store';
 import { Avatar } from './Avatar';
-import pronobisMark from '../assets/pronobis-mark.svg';
 import './TopNavBar.css';
 
 type Props = {
@@ -15,10 +14,6 @@ export function TopNavBar({ onOpenSettings }: Props) {
   return (
     <div className="top-nav">
       <div className="top-nav__row">
-        <div className="top-nav__chip top-nav__chip--icon top-nav__logo" aria-label="ProNobis">
-          <img src={pronobisMark} alt="" className="top-nav__logo-mark" />
-        </div>
-
         <div className="top-nav__spacer" />
 
         <div className="top-nav__chip top-nav__pill">
