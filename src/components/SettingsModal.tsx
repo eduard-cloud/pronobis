@@ -1,13 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  SFXmark,
-  SFChevronRight,
-  SFBellFill,
-  SFLocationFill,
-  SFLockFill,
-  SFInfoCircleFill,
-  SFArrowClockwise,
-} from 'sf-symbols-lib/monochrome';
+import { SFXmark, SFChevronRight, SFBellFill } from 'sf-symbols-lib/monochrome';
 import { usePeople } from '../data/store';
 import { Avatar } from './Avatar';
 import { formatMemberSince } from '../utils/format';
@@ -17,7 +9,6 @@ const SETTINGS_STORAGE_KEY = 'pronobis.settings.v1';
 
 type StoredSettings = {
   notifications: boolean;
-  locationSharing: boolean;
 };
 
 function loadSettings(): StoredSettings {
@@ -27,16 +18,15 @@ function loadSettings(): StoredSettings {
   } catch {
     // fall through to defaults
   }
-  return { notifications: true, locationSharing: true };
+  return { notifications: true };
 }
 
 type Props = {
   onClose: () => void;
   onEditProfile: () => void;
-  onReset: () => void;
 };
 
-export function SettingsModal({ onClose, onEditProfile, onReset }: Props) {
+export function SettingsModal({ onClose, onEditProfile }: Props) {
   const { people, households, currentUserId } = usePeople();
   const [settings, setSettings] = useState<StoredSettings>(loadSettings);
 
@@ -55,13 +45,6 @@ export function SettingsModal({ onClose, onEditProfile, onReset }: Props) {
 
   function toggle(key: keyof StoredSettings) {
     setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
-  }
-
-  function handleReset() {
-    if (window.confirm('Reset demo data? This clears everyone added during this session.')) {
-      onReset();
-      onClose();
-    }
   }
 
   return (
@@ -128,61 +111,6 @@ export function SettingsModal({ onClose, onEditProfile, onReset }: Props) {
               </span>
             </button>
 
-            <button type="button" className="settings-row settings-row--toggle" onClick={() => toggle('locationSharing')}>
-              <span className="settings-row__icon settings-row__icon--blue">
-                <SFLocationFill size={16} />
-              </span>
-              <span className="settings-row__label">Location Sharing</span>
-              <span
-                className={
-                  'settings-toggle' + (settings.locationSharing ? ' settings-toggle--on' : '')
-                }
-              >
-                <span className="settings-toggle__knob" />
-              </span>
-            </button>
-
-            <button
-              type="button"
-              className="settings-row"
-              onClick={() =>
-                window.alert('Only people in your household can see your exact location.')
-              }
-            >
-              <span className="settings-row__icon settings-row__icon--green">
-                <SFLockFill size={16} />
-              </span>
-              <span className="settings-row__label">Privacy</span>
-              <span className="settings-row__trailing">
-                <span className="settings-row__trailing-label">Family only</span>
-                <SFChevronRight size={13} />
-              </span>
-            </button>
-
-            <button
-              type="button"
-              className="settings-row"
-              onClick={() => window.alert('ProNobis v1.0 — keeping your family close.')}
-            >
-              <span className="settings-row__icon settings-row__icon--teal">
-                <SFInfoCircleFill size={16} />
-              </span>
-              <span className="settings-row__label">About ProNobis</span>
-              <span className="settings-row__trailing">
-                <SFChevronRight size={13} />
-              </span>
-            </button>
-
-            <button
-              type="button"
-              className="settings-row settings-row--danger"
-              onClick={handleReset}
-            >
-              <span className="settings-row__icon settings-row__icon--red">
-                <SFArrowClockwise size={16} />
-              </span>
-              <span className="settings-row__label">Reset Demo Data</span>
-            </button>
           </div>
         </div>
       </div>
