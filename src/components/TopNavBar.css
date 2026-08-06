@@ -91,9 +91,15 @@
 .top-nav__pill {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 14px 5px 5px;
+  padding: 4px;
   flex: 0 0 auto;
+}
+
+.top-nav__divider {
+  align-self: stretch;
+  width: 1px;
+  margin: 6px 8px;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .top-nav__bell {
@@ -103,6 +109,38 @@
   align-items: center;
   justify-content: center;
   color: #0D2B26;
-  width: 24px;
+  width: 40px;
+  height: 40px;
+}
+
+/* Missing in the current build vs. Figma: the same liquid-glass rim used
+   elsewhere, wrapped around the profile photo specifically. */
+.top-nav__pill .avatar {
+  position: relative;
+}
+
+.top-nav__pill .avatar::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  padding: 2px;
+  background: conic-gradient(
+    from 210deg at 50% 50%,
+    rgba(255, 255, 255, 0.35) 0deg,
+    #fff 60deg,
+    #fff 110deg,
+    rgba(255, 255, 255, 0.45) 165deg,
+    rgba(255, 255, 255, 0.3) 220deg,
+    #fff 300deg,
+    rgba(255, 255, 255, 0.35) 360deg
+  );
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 

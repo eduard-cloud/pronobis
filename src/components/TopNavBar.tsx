@@ -26,12 +26,13 @@ export function TopNavBar({ onOpenSettings }: Props) {
             <Avatar
               src={currentUser.photo}
               alt={currentUser.firstName}
-              size={36}
+              size={40}
               onClick={onOpenSettings}
             />
           )}
+          <span className="top-nav__divider" aria-hidden="true" />
           <button type="button" className="top-nav__bell" aria-label="Notifications">
-            <SFBellBadge size={15} />
+            <SFBellBadge size={20} />
           </button>
         </div>
       </div>
