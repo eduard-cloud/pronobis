@@ -87,7 +87,7 @@
   border: none;
   background: none;
   padding: 0;
-  color: #174c44;
+  color: #0D2B26;
 }
 
 .tab-bar__tab:first-child {
@@ -129,7 +129,7 @@
   width: 54px;
   height: 54px;
   border: none;
-  color: #174c44;
+  color: #0D2B26;
 }
 
 .tab-bar__search {
@@ -144,7 +144,7 @@
 
 .tab-bar__search-icon {
   display: flex;
-  color: #174c44;
+  color: #0D2B26;
   flex: 0 0 auto;
 }
 
@@ -181,5 +181,5 @@
   border: none;
   border-radius: 50%;
   background: rgba(18, 57, 51, 0.08);
-  color: #174c44;
+  color: #0D2B26;
 }

@@ -77,7 +77,7 @@
 }
 
 .map-mode-switch__segment--active {
-  color: #174c44;
+  color: #0D2B26;
 }
 
 .map-mode-switch__label {
@@ -95,7 +95,7 @@
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-  color: #174c44;
+  color: #0D2B26;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 13px;
