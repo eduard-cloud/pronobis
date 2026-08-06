@@ -6,7 +6,7 @@ import { usePeople } from '../data/store';
 import { events as allEvents } from '../data/events';
 import { EVENT_CATEGORIES } from '../data/eventCategories';
 import { matchesBucket, type TimeBucket } from '../utils/eventTime';
-import { createPersonMarkerElement } from '../map/PersonMarker';
+import { createPersonMarkerElement, AVATAR_SIZE } from '../map/PersonMarker';
 import { createClusterMarkerElement } from '../map/clusterIcon';
 import { createEventMarkerElement } from '../map/EventMarker';
 import { createEventClusterMarkerElement } from '../map/eventClusterIcon';
@@ -49,6 +49,19 @@ function tierForZoom(zoom: number): LayerTier {
   return 'street';
 }
 
+// Mapbox GL's supercluster freezes a cluster's membership at clusterMaxZoom —
+// zooming in further just keeps returning whatever grouping existed at that
+// zoom, forever, even if two people's jittered coordinates only barely
+// touched by chance. That made small clusters "stick" indefinitely once
+// formed, well past the zoom where they should've split into individual
+// pins. So instead of leaning on Mapbox's cluster freeze to decide when
+// people render individually, we do it ourselves: once the camera is this
+// close, clustering is bypassed entirely and every visible person gets
+// their own marker, positioned by declutterMarkers() below. Below this
+// zoom, the map still shows real cluster bubbles for a genuinely zoomed-out
+// view — the Snapchat-style "group of dots" is fine there.
+const EXPAND_ZOOM_THRESHOLD = 15;
+
 // Person avatars, event tiles, and cluster peeks all grow/shrink with zoom
 // instead of staying a fixed pixel size, so the map reads as more alive
 // when scrolling/pinching to zoom.
@@ -78,6 +91,19 @@ function distanceSq(a: mapboxgl.LngLat, b: [number, number]): number {
   const dLng = a.lng - b[0];
   const dLat = a.lat - b[1];
   return dLng * dLng + dLat * dLat;
+}
+
+// Minimum breathing room between two avatar edges, in pixels, once decluttered.
+const DECLUTTER_GAP = 8;
+
+function hashPair(a: string, b: string): number {
+  const str = a < b ? `${a}|${b}` : `${b}|${a}`;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
 }
 
 type Props = {
@@ -210,7 +236,10 @@ export function MapView({ query, onSelectPerson, onSelectEvent, mode, onModeChan
         data: toPersonFeatureCollection(visibleAdultsRef.current),
         cluster: true,
         clusterRadius: 35,
-        clusterMaxZoom: 20,
+        // Only relevant below EXPAND_ZOOM_THRESHOLD — updatePeopleMarkers()
+        // bypasses this source's clustering above that zoom (see comment
+        // there), so this just needs to stay under the threshold.
+        clusterMaxZoom: 14,
       });
       map.addSource(EVENTS_SOURCE_ID, {
         type: 'geojson',
@@ -292,6 +321,7 @@ export function MapView({ query, onSelectPerson, onSelectEvent, mode, onModeChan
         for (const marker of markersRef.current.values()) {
           applyMarkerScale(marker.getElement(), scale);
         }
+        declutterMarkers();
       });
     });
 
@@ -304,6 +334,77 @@ export function MapView({ query, onSelectPerson, onSelectEvent, mode, onModeChan
       const bounds = new mapboxgl.LngLatBounds();
       points.forEach((p) => bounds.extend(p));
       return bounds;
+    }
+
+    // Spiderfy-style relaxation: iteratively pushes apart any two person
+    // markers whose screen positions sit closer than one avatar diameter,
+    // so people sharing (or nearly sharing) a coordinate — even members of
+    // the same family — always render as separate, individually clickable
+    // pins instead of overlapping or merging into a cluster blob. Runs in
+    // screen space via marker.setOffset, so it never touches the underlying
+    // geo coordinates and re-settles automatically whenever zoom changes
+    // the effective avatar size.
+    function declutterMarkers() {
+      const scale = scaleForZoom(map.getZoom());
+      const minDist = AVATAR_SIZE * scale + DECLUTTER_GAP;
+
+      const entries: { id: string; marker: mapboxgl.Marker; base: mapboxgl.Point; offset: { x: number; y: number } }[] = [];
+      for (const [id, marker] of markersRef.current) {
+        if (!id.startsWith('person-')) continue;
+        entries.push({ id, marker, base: map.project(marker.getLngLat()), offset: { x: 0, y: 0 } });
+      }
+
+      for (let iter = 0; iter < 6; iter++) {
+        let moved = false;
+        for (let i = 0; i < entries.length; i++) {
+          for (let j = i + 1; j < entries.length; j++) {
+            const a = entries[i];
+            const b = entries[j];
+            let dx = b.base.x + b.offset.x - (a.base.x + a.offset.x);
+            let dy = b.base.y + b.offset.y - (a.base.y + a.offset.y);
+            let dist = Math.hypot(dx, dy);
+            if (dist >= minDist) continue;
+            moved = true;
+            if (dist < 0.001) {
+              const angle = (hashPair(a.id, b.id) % 360) * (Math.PI / 180);
+              dx = Math.cos(angle);
+              dy = Math.sin(angle);
+              dist = 1;
+            }
+            const push = (minDist - dist) / 2;
+            const nx = (dx / dist) * push;
+            const ny = (dy / dist) * push;
+            a.offset.x -= nx;
+            a.offset.y -= ny;
+            b.offset.x += nx;
+            b.offset.y += ny;
+          }
+        }
+        if (!moved) break;
+      }
+
+      for (const { marker, offset } of entries) {
+        marker.setOffset([offset.x, offset.y]);
+      }
+    }
+
+    function upsertPersonMarker(props: PersonProperties, coords: [number, number], seen: Set<string>) {
+      const id = `person-${props.personId}`;
+      if (seen.has(id)) return;
+      seen.add(id);
+
+      const existing = markersRef.current.get(id);
+      if (existing) {
+        existing.setLngLat(coords);
+        return;
+      }
+      const el = createPersonMarkerElement(
+        { id: props.personId, firstName: props.firstName, photo: props.photo } as Person,
+        (personId) => onSelectPersonRef.current(personId)
+      );
+      const marker = new mapboxgl.Marker({ element: el }).setLngLat(coords).addTo(map);
+      applyMarkerScale(el, scaleForZoom(map.getZoom()));
+      markersRef.current.set(id, marker);
     }
 
     // One reconciler for every marker kind. Switching People/Events just
@@ -326,12 +427,26 @@ export function MapView({ query, onSelectPerson, onSelectEvent, mode, onModeChan
           markersRef.current.delete(id);
         }
       }
+
+      if (modeRef.current === 'people') declutterMarkers();
     }
     updateMarkersRef.current = updateMarkers;
 
     function updatePeopleMarkers(seen: Set<string>) {
       const source = map.getSource(PEOPLE_SOURCE_ID) as mapboxgl.GeoJSONSource | undefined;
       if (!source) return;
+
+      if (map.getZoom() >= EXPAND_ZOOM_THRESHOLD) {
+        // Close enough in that nobody should hide behind a group icon —
+        // render every visible adult as their own marker straight from the
+        // source data, ignoring whatever Mapbox's clustering thinks at this
+        // zoom. declutterMarkers() keeps them from overlapping.
+        for (const feature of toPersonFeatureCollection(visibleAdultsRef.current).features) {
+          const coords = feature.geometry.coordinates as [number, number];
+          upsertPersonMarker(feature.properties, coords, seen);
+        }
+        return;
+      }
 
       const features = map.querySourceFeatures(PEOPLE_SOURCE_ID);
 
@@ -363,7 +478,7 @@ export function MapView({ query, onSelectPerson, onSelectEvent, mode, onModeChan
             const el = createClusterMarkerElement(peek, props.point_count ?? peek.length, () => {
               source.getClusterExpansionZoom(clusterId, (zoomErr, zoom) => {
                 if (zoomErr || zoom == null) return;
-                map.easeTo({ center: coords, zoom });
+                map.easeTo({ center: coords, zoom: Math.max(zoom, EXPAND_ZOOM_THRESHOLD) });
               });
             });
             const marker = new mapboxgl.Marker({ element: el }).setLngLat(coords).addTo(map);
@@ -371,22 +486,7 @@ export function MapView({ query, onSelectPerson, onSelectEvent, mode, onModeChan
             markersRef.current.set(id, marker);
           });
         } else {
-          const id = `person-${props.personId}`;
-          if (seen.has(id)) continue;
-          seen.add(id);
-
-          const existing = markersRef.current.get(id);
-          if (existing) {
-            existing.setLngLat(coords);
-            continue;
-          }
-          const el = createPersonMarkerElement(
-            { id: props.personId, firstName: props.firstName, photo: props.photo } as Person,
-            (personId) => onSelectPersonRef.current(personId)
-          );
-          const marker = new mapboxgl.Marker({ element: el }).setLngLat(coords).addTo(map);
-          applyMarkerScale(el, scaleForZoom(map.getZoom()));
-          markersRef.current.set(id, marker);
+          upsertPersonMarker(props, coords, seen);
         }
       }
     }
