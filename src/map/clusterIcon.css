@@ -32,10 +32,13 @@
 .map-cluster__avatar {
   position: absolute;
   top: 0;
+  width: 34px !important;
+  height: 34px !important;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #fff;
   box-shadow: 0 2px 8px rgba(12, 15, 20, 0.35);
+  flex-shrink: 0;
 }
 
 .map-cluster__badge {
