@@ -53,6 +53,7 @@
 
 .edit-profile__photo-picker {
   align-self: center;
+  border: none;
 }
 
 .edit-profile__family-list {
